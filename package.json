@@ -1,0 +1,73 @@
+{
+  "name": "taskjuggler-syntax",
+  "displayName": "TaskJuggler Language Support",
+  "description": "Complete language support for TaskJuggler: syntax highlighting, snippets, folding, and IntelliSense",
+  "version": "0.0.1",
+  "buildDate": "2026-01-28",
+  "publisher": "fabrizio-vacca",
+  "author": {
+    "name": "Fabrizio Vacca",
+    "email": "fabrizio.vacca@gmail.com"
+  },
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "icon": "images/icon.png",
+  "contributes": {
+    "languages": [
+      {
+        "id": "taskjuggler",
+        "aliases": [
+          "TaskJuggler",
+          "tjp"
+        ],
+        "extensions": [
+          ".tjp",
+          ".tji"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/file-icon.svg",
+          "dark": "./images/file-icon.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "taskjuggler",
+        "scopeName": "source.taskjuggler",
+        "path": "./syntaxes/taskjuggler.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "taskjuggler",
+        "path": "./snippets/taskjuggler.json"
+      }
+    ]
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabriziovacca/taskjuggler-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fabriziovacca/taskjuggler-vscode/issues"
+  },
+  "homepage": "https://github.com/fabriziovacca/taskjuggler-vscode#readme",
+  "keywords": [
+    "taskjuggler",
+    "project management",
+    "syntax highlighting",
+    "snippets",
+    "code completion",
+    "tjp",
+    "tji",
+    "project planning",
+    "resource management"
+  ]
+}

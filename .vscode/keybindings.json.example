@@ -1,0 +1,72 @@
+[
+  // TaskJuggler custom keybindings for VS Code
+  // Copy these to your User keybindings (Preferences > Keyboard Shortcuts > keybindings.json)
+
+  // Compile current TaskJuggler file
+  {
+    "key": "ctrl+shift+b",
+    "command": "workbench.action.tasks.runTask",
+    "args": "TaskJuggler: Compile Project",
+    "when": "editorLangId == 'taskjuggler'"
+  },
+
+  // Check syntax
+  {
+    "key": "ctrl+shift+c",
+    "command": "workbench.action.tasks.runTask",
+    "args": "TaskJuggler: Check Syntax",
+    "when": "editorLangId == 'taskjuggler'"
+  },
+
+  // Insert task snippet
+  {
+    "key": "ctrl+alt+t",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "name": "Task Definition"
+    },
+    "when": "editorLangId == 'taskjuggler'"
+  },
+
+  // Insert resource snippet
+  {
+    "key": "ctrl+alt+r",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "name": "Resource Definition"
+    },
+    "when": "editorLangId == 'taskjuggler'"
+  },
+
+  // Insert milestone
+  {
+    "key": "ctrl+alt+m",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "name": "Milestone"
+    },
+    "when": "editorLangId == 'taskjuggler'"
+  },
+
+  // Fold all tasks (fold level 1)
+  {
+    "key": "ctrl+k ctrl+1",
+    "command": "editor.foldLevel1",
+    "when": "editorLangId == 'taskjuggler'"
+  },
+
+  // Comment/uncomment line
+  {
+    "key": "ctrl+/",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && editorLangId == 'taskjuggler'"
+  },
+
+  // Open TaskJuggler documentation
+  {
+    "key": "ctrl+shift+h",
+    "command": "vscode.open",
+    "args": "https://taskjuggler.org/tj3/manual/index.html",
+    "when": "editorLangId == 'taskjuggler'"
+  }
+]

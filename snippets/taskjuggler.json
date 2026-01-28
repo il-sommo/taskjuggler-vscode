@@ -1,0 +1,349 @@
+{
+  "Project Definition": {
+    "prefix": "project",
+    "body": [
+      "project ${1:project_id} \"${2:Project Name}\" ${3:2024-01-01} +${4:6}m {",
+      "\ttimezone \"${5:UTC}\"",
+      "\ttimeformat \"%Y-%m-%d\"",
+      "\tnumberformat \"-\" \"\" \",\" \".\" 1",
+      "\tcurrencyformat \"(\" \")\" \",\" \".\" 0",
+      "\tcurrency \"${6:USD}\"",
+      "\t",
+      "\tscenario plan \"Plan\" {",
+      "\t\tscenario actual \"Actual\"",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a new TaskJuggler project"
+  },
+  "Task Definition": {
+    "prefix": "task",
+    "body": [
+      "task ${1:task_id} \"${2:Task Name}\" {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a new task"
+  },
+  "Task with Effort": {
+    "prefix": "task-effort",
+    "body": [
+      "task ${1:task_id} \"${2:Task Name}\" {",
+      "\teffort ${3:5}d",
+      "\tallocate ${4:resource}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a task with effort and allocation"
+  },
+  "Task with Duration": {
+    "prefix": "task-duration",
+    "body": [
+      "task ${1:task_id} \"${2:Task Name}\" {",
+      "\tduration ${3:5}d",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a task with duration"
+  },
+  "Milestone": {
+    "prefix": "milestone",
+    "body": [
+      "task ${1:milestone_id} \"${2:Milestone Name}\" {",
+      "\tmilestone",
+      "\tstart ${3:2024-01-01}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a milestone task"
+  },
+  "Resource Definition": {
+    "prefix": "resource",
+    "body": [
+      "resource ${1:resource_id} \"${2:Resource Name}\" {",
+      "\temail \"${3:email@example.com}\"",
+      "\trate ${4:500.0}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a new resource"
+  },
+  "Resource Team": {
+    "prefix": "resource-team",
+    "body": [
+      "resource ${1:team_id} \"${2:Team Name}\" {",
+      "\tresource ${3:member1} \"${4:Member 1}\" {",
+      "\t\trate ${5:400.0}",
+      "\t}",
+      "\tresource ${6:member2} \"${7:Member 2}\" {",
+      "\t\trate ${8:450.0}",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a team of resources"
+  },
+  "Account Definition": {
+    "prefix": "account",
+    "body": [
+      "account ${1:account_id} \"${2:Account Name}\" {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create an account"
+  },
+  "Account Structure": {
+    "prefix": "account-full",
+    "body": [
+      "account cost \"Project Cost\" {",
+      "\taccount dev \"Development\"",
+      "\taccount doc \"Documentation\"",
+      "\taccount test \"Testing\"",
+      "}",
+      "account rev \"Revenue\"",
+      "balance cost rev",
+      "$0"
+    ],
+    "description": "Create a complete account structure"
+  },
+  "Task Report": {
+    "prefix": "taskreport",
+    "body": [
+      "taskreport ${1:report_id} \"${2:Report Title}\" {",
+      "\tformats html",
+      "\tcolumns bsi { title 'WBS' },",
+      "\t        name,",
+      "\t        start,",
+      "\t        end,",
+      "\t        effort { title \"Work\" },",
+      "\t        chart { scale day width 500 }",
+      "\t",
+      "\tloadunit days",
+      "\tcaption '${3:Report description}'",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a task report"
+  },
+  "Resource Report": {
+    "prefix": "resourcereport",
+    "body": [
+      "resourcereport ${1:report_id} \"${2:Report Title}\" {",
+      "\tformats html",
+      "\tcolumns name,",
+      "\t        effort { title \"Total Effort\" },",
+      "\t        chart { scale day }",
+      "\t",
+      "\tloadunit days",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a resource report"
+  },
+  "Export CSV": {
+    "prefix": "export-csv",
+    "body": [
+      "export ${1:export_id} {",
+      "\tformats csv",
+      "\tstart ${2:2024-01-01}",
+      "\tend ${3:2024-12-31}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Export data to CSV"
+  },
+  "Scenario": {
+    "prefix": "scenario",
+    "body": [
+      "scenario ${1:scenario_id} \"${2:Scenario Name}\" {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a scenario"
+  },
+  "Macro Definition": {
+    "prefix": "macro",
+    "body": [
+      "macro ${1:macro_name} [",
+      "\t$0",
+      "]"
+    ],
+    "description": "Create a macro"
+  },
+  "Allocate Resources": {
+    "prefix": "allocate",
+    "body": [
+      "allocate ${1:resource_id}$0"
+    ],
+    "description": "Allocate a resource to a task"
+  },
+  "Dependencies": {
+    "prefix": "depends",
+    "body": [
+      "depends ${1:task_id}$0"
+    ],
+    "description": "Add task dependencies"
+  },
+  "Shift Definition": {
+    "prefix": "shift",
+    "body": [
+      "shift ${1:shift_id} \"${2:Shift Name}\" {",
+      "\tworkinghours mon - fri 09:00 - 12:00, 13:00 - 18:00",
+      "\tworkinghours sat, sun off",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a work shift"
+  },
+  "Leave Definition": {
+    "prefix": "leave",
+    "body": [
+      "leaves ${1:holiday} \"${2:Holiday Name}\" ${3:2024-01-01}$0"
+    ],
+    "description": "Define a leave/holiday"
+  },
+  "Journal Entry": {
+    "prefix": "journalentry",
+    "body": [
+      "journalentry ${1:2024-01-01} \"${2:Entry title}\" {",
+      "\tauthor ${3:author_id}",
+      "\tsummary \"${4:Summary}\"",
+      "\tdetails -8<-",
+      "\t${5:Detailed description}",
+      "\t->8-",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a journal entry"
+  },
+  "Working Hours": {
+    "prefix": "workinghours",
+    "body": [
+      "workinghours ${1:mon} - ${2:fri} ${3:09:00} - ${4:18:00}$0"
+    ],
+    "description": "Define working hours"
+  },
+  "Limits": {
+    "prefix": "limits",
+    "body": [
+      "limits {",
+      "\tdailymax ${1:8.0}h",
+      "\tweeklymax ${2:40.0}h",
+      "\t$0",
+      "}"
+    ],
+    "description": "Define resource limits"
+  },
+  "Complete Task Structure": {
+    "prefix": "task-full",
+    "body": [
+      "task ${1:task_id} \"${2:Task Name}\" {",
+      "\tpriority ${3:500}",
+      "\teffort ${4:5}d",
+      "\tallocate ${5:resource}",
+      "\tdepends ${6:!previous_task}",
+      "\t",
+      "\tnote \"${7:Note}\"",
+      "\t",
+      "\ttask ${8:subtask_id} \"${9:Subtask}\" {",
+      "\t\teffort ${10:2}d",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a complete task structure with subtasks"
+  },
+  "Text Report": {
+    "prefix": "textreport",
+    "body": [
+      "textreport ${1:report_id} \"${2:Report Title}\" {",
+      "\tformats html",
+      "\theader -8<-",
+      "\t\t== ${3:Report Header} ==",
+      "\t\t$0",
+      "\t->8-",
+      "}"
+    ],
+    "description": "Create a text report"
+  },
+  "Navigator": {
+    "prefix": "navigator",
+    "body": [
+      "navigator navbar {",
+      "\thidereport 0",
+      "}"
+    ],
+    "description": "Create a navigation bar"
+  },
+  "Flag Definition": {
+    "prefix": "flags",
+    "body": [
+      "flags ${1:flag_name}$0"
+    ],
+    "description": "Define a flag"
+  },
+  "Copyright": {
+    "prefix": "copyright",
+    "body": [
+      "copyright \"${1:Copyright notice}\"$0"
+    ],
+    "description": "Add copyright information"
+  },
+  "Email": {
+    "prefix": "email",
+    "body": [
+      "email \"${1:email@example.com}\"$0"
+    ],
+    "description": "Add email address"
+  },
+  "Rate": {
+    "prefix": "rate",
+    "body": [
+      "rate ${1:500.0}$0"
+    ],
+    "description": "Set rate"
+  },
+  "Efficiency": {
+    "prefix": "efficiency",
+    "body": [
+      "efficiency ${1:1.0}$0"
+    ],
+    "description": "Set efficiency factor"
+  },
+  "Priority": {
+    "prefix": "priority",
+    "body": [
+      "priority ${1:500}$0"
+    ],
+    "description": "Set priority"
+  },
+  "Complete": {
+    "prefix": "complete",
+    "body": [
+      "complete ${1:50}$0"
+    ],
+    "description": "Set completion percentage"
+  },
+  "Start Date": {
+    "prefix": "start",
+    "body": [
+      "start ${1:2024-01-01}$0"
+    ],
+    "description": "Set start date"
+  },
+  "End Date": {
+    "prefix": "end",
+    "body": [
+      "end ${1:2024-12-31}$0"
+    ],
+    "description": "Set end date"
+  },
+  "Booking": {
+    "prefix": "booking",
+    "body": [
+      "booking ${1:resource_id} ${2:2024-01-01} +${3:5}d { ${4:overtime 2} }$0"
+    ],
+    "description": "Create a booking"
+  }
+}

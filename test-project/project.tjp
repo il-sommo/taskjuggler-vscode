@@ -1,0 +1,31 @@
+/*
+ * TaskJuggler Example Project - Accounting Software
+ * Based on official TaskJuggler tutorial
+ * Modularized with include files
+ */
+
+project acso "Accounting Software" 2024-01-16 +4m {
+	timezone "UTC"
+	timeformat "%Y-%m-%d"
+	numberformat "-" "" "," "." 1
+	currencyformat "(" ")" "," "." 0
+	now 2024-03-05
+	currency "USD"
+
+	# Planning scenario
+	scenario plan "Plan" {
+		scenario delayed "Delayed"
+	}
+}
+
+# Include configuration and macros
+include "includes/config.tji"
+
+# Include resource definitions
+include "includes/resources.tji"
+
+# Include task structure
+include "includes/tasks.tji"
+
+# Include reports
+include "includes/reports.tji"

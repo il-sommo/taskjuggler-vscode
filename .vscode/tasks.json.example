@@ -1,0 +1,110 @@
+{
+  // TaskJuggler build tasks for VS Code
+  // Rename this file to tasks.json to use
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TaskJuggler: Compile Project",
+      "type": "shell",
+      "command": "tj3",
+      "args": [
+        "${file}"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": {
+        "owner": "taskjuggler",
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^(.*):(\\d+):\\s+(Error|Warning):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "severity": 3,
+          "message": 4
+        }
+      }
+    },
+    {
+      "label": "TaskJuggler: Check Syntax",
+      "type": "shell",
+      "command": "tj3",
+      "args": [
+        "--check-syntax",
+        "${file}"
+      ],
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "TaskJuggler: Generate Reports",
+      "type": "shell",
+      "command": "tj3",
+      "args": [
+        "--output-dir",
+        "./reports",
+        "${file}"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "TaskJuggler: Open HTML Report",
+      "type": "shell",
+      "command": "open",
+      "args": [
+        "./reports/*.html"
+      ],
+      "windows": {
+        "command": "start",
+        "args": [
+          ".\\reports\\*.html"
+        ]
+      },
+      "linux": {
+        "command": "xdg-open",
+        "args": [
+          "./reports/*.html"
+        ]
+      },
+      "group": "none",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "TaskJuggler: Clean Reports",
+      "type": "shell",
+      "command": "rm",
+      "args": [
+        "-rf",
+        "./reports"
+      ],
+      "windows": {
+        "command": "rmdir",
+        "args": [
+          "/s",
+          "/q",
+          ".\\reports"
+        ]
+      },
+      "group": "none",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    }
+  ]
+}

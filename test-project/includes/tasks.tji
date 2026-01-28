@@ -1,0 +1,87 @@
+/*
+ * Task structure and work breakdown
+ */
+
+# Project start
+task project "Accounting Software" {
+
+	task spec "Specification" {
+		effort 20d
+		${allocate_developers}
+		depends !deliveries.start
+	}
+
+	task software "Software Development" {
+		priority 1000
+
+		task database "Database coupling" {
+			effort 20d
+			allocate dev1, dev2
+		}
+
+		task gui "Graphical User Interface" {
+			effort 35d
+			depends !database
+			allocate dev2, dev3
+		}
+
+		task backend "Back-End Functions" {
+			effort 30d
+			depends !database
+			allocate dev1, dev3
+		}
+	}
+
+	task test "Software testing" {
+		depends !software
+		allocate test, dev2
+
+		task alpha "Alpha Test" {
+			effort 10d
+		}
+
+		task beta "Beta Test" {
+			effort 4w
+			depends !alpha
+		}
+	}
+
+	task manual "Manual" {
+		effort 10w
+		depends !deliveries.start
+		allocate doc, dev3
+	}
+
+	task deliveries "Milestones" {
+
+		task start "Project Start" {
+			start 2024-01-16
+			milestone
+			flags important
+		}
+
+		task prev "Technology Preview" {
+			depends !!spec
+			milestone
+			flags important
+		}
+
+		task alpha "Alpha Release" {
+			depends !!test.alpha
+			milestone
+			flags important
+		}
+
+		task beta "Beta Release" {
+			depends !!test.beta
+			milestone
+			flags important
+		}
+
+		task done "Ship Product to Customer" {
+			depends !!manual, !!software, !!test.beta
+			milestone
+			flags important
+		}
+	}
+}

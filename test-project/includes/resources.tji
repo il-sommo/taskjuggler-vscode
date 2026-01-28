@@ -1,0 +1,45 @@
+/*
+ * Resource definitions
+ */
+
+resource boss "Paul Henry Bullock" {
+	email "phb@crappysoftware.com"
+	rate 480.0
+}
+
+resource dev "Developers" {
+	managers boss
+	flags team
+
+	resource dev1 "Paul Smith" {
+		email "paul@crappysoftware.com"
+		rate 350.0
+	}
+
+	resource dev2 "Sébastien Bono" {
+		email "SBono@crappysoftware.com"
+		rate 380.0
+	}
+
+	resource dev3 "Klaus Müller" {
+		email "Klaus.Mueller@crappysoftware.com"
+		rate 370.0
+	}
+}
+
+resource misc "The Others" {
+	managers boss
+
+	resource test "Peter Murphy" {
+		email "murphy@crappysoftware.com"
+		limits { dailymax 6.4h }
+		rate 310.0
+	}
+
+	resource doc "Dim Sung" {
+		email "sung@crappysoftware.com"
+		limits { dailymax 6.4h }
+		rate 280.0
+		vacation 2024-03-01 - 2024-03-05
+	}
+}

@@ -1,0 +1,21 @@
+# VS Code Extension Package
+*.vsix
+
+# Node modules (if used)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/*
+!.vscode/*.example
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Generated reports
+test-project/reports/

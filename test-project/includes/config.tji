@@ -1,0 +1,28 @@
+/*
+ * Global configuration and macros
+ */
+
+# Default daily rate
+rate 390.0
+
+# Company vacation days
+vacation "New Year's Day" 2024-01-01
+vacation "Birthday of Martin Luther King, Jr." 2024-01-20
+vacation "Washington's Birthday" 2024-02-17
+vacation "Memorial Day" 2024-05-25
+vacation "Independence Day" 2024-07-04
+vacation "Labor Day" 2024-09-02
+vacation "Veterans Day" 2024-11-11
+vacation "Thanksgiving" 2024-11-28
+vacation "Christmas" 2024-12-25
+
+# Macro to allocate developers
+macro allocate_developers [
+	allocate dev1
+	allocate dev2
+	allocate dev3
+]
+
+# Flags
+flags team
+flags important

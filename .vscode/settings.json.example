@@ -1,0 +1,85 @@
+{
+  // TaskJuggler-specific settings for VS Code
+
+  // Editor settings for .tjp and .tji files
+  "[taskjuggler]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": true,
+    "editor.wordWrap": "off",
+    "editor.formatOnSave": false,
+    "editor.rulers": [80, 120],
+
+    // Snippet suggestions
+    "editor.suggest.showSnippets": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.tabCompletion": "on",
+
+    // Code folding
+    "editor.folding": true,
+    "editor.foldingStrategy": "indentation",
+    "editor.showFoldingControls": "always",
+
+    // Bracket matching
+    "editor.matchBrackets": "always",
+    "editor.bracketPairColorization.enabled": true,
+
+    // Minimap
+    "editor.minimap.enabled": true,
+    "editor.minimap.maxColumn": 120,
+
+    // Line numbers
+    "editor.lineNumbers": "on",
+
+    // Whitespace
+    "editor.renderWhitespace": "boundary",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true
+  },
+
+  // File associations
+  "files.associations": {
+    "*.tjp": "taskjuggler",
+    "*.tji": "taskjuggler",
+    "*.tjsp": "taskjuggler"
+  },
+
+  // Exclude patterns (optional - for large projects)
+  "files.exclude": {
+    "**/*.html": false,
+    "**/*.csv": false
+  },
+
+  // Search exclude patterns
+  "search.exclude": {
+    "**/*.html": true,
+    "**/*.csv": true
+  },
+
+  // Terminal settings for TaskJuggler
+  "terminal.integrated.env.osx": {
+    // Add TaskJuggler to PATH if needed
+    // "PATH": "/usr/local/bin:${env:PATH}"
+  },
+
+  "terminal.integrated.env.linux": {
+    // "PATH": "/usr/local/bin:${env:PATH}"
+  },
+
+  // Custom file icon theme (if supported)
+  "workbench.iconTheme": "vs-seti",
+
+  // Color theme recommendations for TaskJuggler
+  // Uncomment your preferred theme:
+  // "workbench.colorTheme": "Monokai",
+  // "workbench.colorTheme": "Solarized Dark",
+  // "workbench.colorTheme": "One Dark Pro",
+
+  // Editor outline/breadcrumbs
+  "breadcrumbs.enabled": true,
+  "outline.problems.enabled": true,
+
+  // Auto-save (optional)
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000
+}

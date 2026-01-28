@@ -1,0 +1,104 @@
+/*
+ * Report definitions
+ */
+
+# Navigation bar for HTML reports
+navigator navbar {
+	hidereport 0
+}
+
+# Overview Gantt Chart
+taskreport overview "Overview" {
+	headline "Project Overview"
+	formats html
+	columns bsi { title 'WBS' },
+	        name { title 'Task Name' width 200 },
+	        start,
+	        end,
+	        effort,
+	        chart { scale week width 600 }
+
+	loadunit days
+	hideresource 1
+}
+
+# Milestone Report
+taskreport milestones "Milestones" {
+	headline "Project Milestones"
+	formats html
+	columns name,
+	        start { title "Date" },
+	        note { width 400 }
+
+	hidetask ~ismilestone(0)
+	sorttasks start.up
+}
+
+# Development Task List
+taskreport development "Development" {
+	headline "Development Task List"
+	formats html
+	columns bsi { title 'WBS' },
+	        name { title 'Task Name' width 200 },
+	        start,
+	        end,
+	        effort,
+	        chart { scale day width 600 }
+
+	taskroot project.software
+	hideresource 1
+	loadunit days
+}
+
+# Resource Allocation Report
+resourcereport resources "Resources" {
+	headline "Resource Allocation Report"
+	formats html
+	columns name,
+	        effort { title "Work Effort" },
+	        chart { scale week width 600 }
+
+	loadunit days
+	hidetask 1
+}
+
+# Resource Detail Report
+resourcereport resourceGraph "ResourceGraph" {
+	headline "Resource Allocation Graph"
+	formats html
+	columns name,
+	        chart { scale week width 800 }
+
+	loadunit days
+	hidetask ~(isleaf() & isleaf_())
+	sorttasks tree
+}
+
+# Status Report
+textreport status "Status" {
+	formats html
+	header -8<-
+		== Project Status ==
+
+		<[report id="overview"]>
+
+		=== Milestones ===
+
+		<[report id="milestones"]>
+
+		=== Development Progress ===
+
+		<[report id="development"]>
+
+		=== Resource Allocation ===
+
+		<[report id="resources"]>
+	->8-
+}
+
+# CSV Export Report
+taskreport TasksCSV "Tasks CSV" {
+	formats csv
+	columns id, name, start, end, effort
+	hideresource 1
+}
