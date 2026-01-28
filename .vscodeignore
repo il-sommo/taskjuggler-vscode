@@ -4,7 +4,7 @@
 *.md
 !README.md
 !CHANGELOG.md
-node_modules
+node_modules/**
 test/**
 .editorconfig
 install.sh
@@ -18,3 +18,8 @@ SUMMARY.md
 example.tjp
 example-complete.tjp
 images/icon.png.svg
+src/**
+tsconfig.json
+package-lock.json
+*.js.map
+package.json.bak

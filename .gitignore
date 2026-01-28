@@ -1,8 +1,9 @@
 # VS Code Extension Package
 *.vsix
 
-# Node modules (if used)
+# Node modules
 node_modules/
+package-lock.json
 
 # OS files
 .DS_Store
@@ -19,3 +20,7 @@ npm-debug.log*
 
 # Generated reports
 test-project/reports/
+
+# TypeScript compilation output
+out/
+*.js.map

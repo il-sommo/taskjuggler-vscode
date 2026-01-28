@@ -1,26 +1,19 @@
 {
   "name": "taskjuggler-syntax",
   "displayName": "TaskJuggler Language Support",
-  "description": "Complete language support for TaskJuggler: syntax highlighting, snippets, folding, IntelliSense, and AI-powered features",
-  "version": "0.0.2",
-  "buildDate": "2026-01-29",
+  "description": "Complete language support for TaskJuggler: syntax highlighting, snippets, folding, and IntelliSense",
+  "version": "0.0.1",
+  "buildDate": "2026-01-28",
   "publisher": "fabrizio-vacca",
-  "author": {
-    "name": "Fabrizio Vacca",
-    "email": "fabrizio.vacca@gmail.com"
-  },
+  "author": "Fabrizio Vacca <fabrizio.vacca@gmail.com>",
   "engines": {
-    "vscode": "^1.108.0"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Programming Languages",
     "Snippets"
   ],
   "icon": "images/icon.png",
-  "main": "./out/extension.js",
-  "activationEvents": [
-    "onLanguage:taskjuggler"
-  ],
   "contributes": {
     "languages": [
       {
@@ -72,16 +65,16 @@
     "tjp",
     "tji",
     "project planning",
-    "resource management",
-    "ai",
-    "intellisense"
+    "resource management"
   ],
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile"
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "commonjs",
   "devDependencies": {
     "@types/node": "^25.1.0",
     "@types/vscode": "^1.108.1",

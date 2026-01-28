@@ -4,6 +4,56 @@ All notable changes to the "taskjuggler-syntax" extension will be documented in 
 
 **Author**: Fabrizio Vacca (fabrizio.vacca@gmail.com)
 
+## [0.0.2] - 2026-01-29
+
+### Added - AI-Powered Features 🤖
+
+#### Hover Documentation
+- **Intelligent hover tooltips**: Hover over any TaskJuggler keyword to see detailed documentation
+- Shows syntax, description, and examples for all keywords
+- Context-aware information for properties, attributes, functions, and reports
+- Markdown-formatted documentation with code examples
+
+#### Smart Completions
+- **Context-aware IntelliSense**: Get intelligent completion suggestions based on your current position
+- **Task references**: When typing `depends`, automatically suggests all defined tasks
+- **Resource references**: When typing `allocate`, automatically suggests all defined resources
+- Keyword completions with descriptions and examples
+- Integration with VS Code's native IntelliSense system
+
+#### Go-to-Definition
+- **Navigate to definitions**: Ctrl/Cmd+Click on task or resource references to jump to their definition
+- Works with `depends` and `allocate` statements
+- Cross-file navigation support (works across .tjp and .tji files)
+- Instant symbol lookup for tasks, resources, macros, and scenarios
+
+#### Symbol Parser
+- Real-time parsing of TaskJuggler documents
+- Tracks all defined tasks, resources, macros, and scenarios
+- Enables smart features like completions and navigation
+- Fast incremental parsing for large projects
+
+### Technical Changes
+
+- **TypeScript-based extension**: Migrated from JSON-only to full TypeScript implementation
+- Added Language Server features using VS Code's language APIs
+- New extension activation on language detection
+- Compiled output in `out/` directory
+- Source code in `src/` directory:
+  - `extension.ts` - Main extension entry point
+  - `hoverProvider.ts` - Hover documentation provider
+  - `completionProvider.ts` - Context-aware completions
+  - `definitionProvider.ts` - Go-to-definition navigation
+  - `taskjugglerParser.ts` - TaskJuggler syntax parser
+  - `taskjugglerData.ts` - Keyword database
+
+### Improved
+
+- Enhanced package.json with activation events
+- Added TypeScript compilation workflow
+- Updated build system to support TypeScript
+- Better extension bundling and optimization
+
 ## [0.0.1] - 2026-01-28
 
 ### Added

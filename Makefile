@@ -3,7 +3,7 @@
 
 # Extension metadata
 EXTENSION_NAME = taskjuggler-syntax
-VERSION = 0.0.1
+VERSION = 0.0.2
 VSIX_FILE = $(EXTENSION_NAME)-$(VERSION).vsix
 
 # Directories
@@ -85,7 +85,12 @@ package-force: ## Create VSIX package without validation
 
 ##@ Installation
 
-install: ## Install extension to VS Code (manual copy)
+compile: ## Compile TypeScript source
+	@echo "$(GREEN)Compiling TypeScript...$(NC)"
+	@npm run compile
+	@echo "$(GREEN)✓ TypeScript compiled$(NC)"
+
+install: compile ## Install extension to VS Code (manual copy)
 	@echo "$(GREEN)Installing extension to VS Code...$(NC)"
 	@if [ -d "$(VSCODE_EXT_DIR)" ]; then \
 		echo "$(YELLOW)Extension already installed. Removing old version...$(NC)"; \
@@ -99,6 +104,7 @@ install: ## Install extension to VS Code (manual copy)
 	@cp -r syntaxes "$(VSCODE_EXT_DIR)/"
 	@cp -r snippets "$(VSCODE_EXT_DIR)/"
 	@cp -r images "$(VSCODE_EXT_DIR)/"
+	@cp -r out "$(VSCODE_EXT_DIR)/"
 	@echo "$(GREEN)✓ Extension installed to: $(VSCODE_EXT_DIR)$(NC)"
 	@echo "$(YELLOW)  Please restart VS Code to activate the extension$(NC)"
 
