@@ -2,7 +2,7 @@
   "name": "taskjuggler-syntax",
   "displayName": "TaskJuggler Language Support",
   "description": "Complete language support for TaskJuggler: syntax highlighting, snippets, folding, IntelliSense, and AI-powered features",
-  "version": "0.0.2",
+  "version": "0.2.1",
   "buildDate": "2026-01-29",
   "publisher": "fabrizio-vacca",
   "author": {

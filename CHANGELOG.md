@@ -4,6 +4,13 @@ All notable changes to the "taskjuggler-syntax" extension will be documented in 
 
 **Author**: Fabrizio Vacca (fabrizio.vacca@gmail.com)
 
+## [0.2.1] - 2026-01-29
+
+### Fixed
+- Fixed version display in VS Code extensions panel
+- Cleaned up old extension versions
+- Proper version numbering (0.2.1 instead of 0.0.2)
+
 ## [0.0.2] - 2026-01-29
 
 ### Added - AI-Powered Features 🤖
