@@ -345,5 +345,321 @@
       "booking ${1:resource_id} ${2:2024-01-01} +${3:5}d { ${4:overtime 2} }$0"
     ],
     "description": "Create a booking"
+  },
+  "Account Report": {
+    "prefix": "accountreport",
+    "body": [
+      "accountreport ${1:report_id} \"${2:Account Report}\" {",
+      "\tformats html",
+      "\tcolumns name, total, ${3|cost,revenue,profit|}",
+      "\tbalance ${4|cost,revenue|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create an account report"
+  },
+  "Timesheet Report": {
+    "prefix": "timesheetreport",
+    "body": [
+      "timesheetreport ${1:report_id} \"${2:Timesheet}\" {",
+      "\tformats html",
+      "\tresource ${3:resource_id}",
+      "\tweekly ${4:2024-01-01}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a timesheet report"
+  },
+  "Trace Report": {
+    "prefix": "tracereport",
+    "body": [
+      "tracereport ${1:report_id} \"${2:Trace Report}\" {",
+      "\tformats html",
+      "\tsortresources nameup",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a trace report for debugging"
+  },
+  "iCal Report": {
+    "prefix": "icalreport",
+    "body": [
+      "icalreport ${1:report_id} \"${2:Calendar Export}\" {",
+      "\ttask ${3:task_id}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Export to iCalendar format"
+  },
+  "XML Report": {
+    "prefix": "xmlreport",
+    "body": [
+      "xmlreport ${1:report_id} \"${2:XML Export}\" {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Export to XML format"
+  },
+  "Vacation": {
+    "prefix": "vacation",
+    "body": [
+      "vacation ${1:2024-08-01} - ${2:2024-08-15}$0"
+    ],
+    "description": "Define vacation period for a resource"
+  },
+  "Managers": {
+    "prefix": "managers",
+    "body": [
+      "managers ${1:manager_id}$0"
+    ],
+    "description": "Assign managers to a resource"
+  },
+  "Responsible": {
+    "prefix": "responsible",
+    "body": [
+      "responsible ${1:resource_id}$0"
+    ],
+    "description": "Set responsible person for a task"
+  },
+  "Timezone": {
+    "prefix": "timezone",
+    "body": [
+      "timezone \"${1:UTC}\"$0"
+    ],
+    "description": "Set timezone"
+  },
+  "Scheduling ASAP": {
+    "prefix": "asap",
+    "body": [
+      "scheduling asap$0"
+    ],
+    "description": "Schedule task as soon as possible"
+  },
+  "Scheduling ALAP": {
+    "prefix": "alap",
+    "body": [
+      "scheduling alap$0"
+    ],
+    "description": "Schedule task as late as possible"
+  },
+  "Select Filter": {
+    "prefix": "select",
+    "body": [
+      "select ${1|isleaf(),istask(),ismilestone(),isactive()|}$0"
+    ],
+    "description": "Filter tasks/resources with logical expressions"
+  },
+  "Hide Task": {
+    "prefix": "hidetask",
+    "body": [
+      "hidetask ${1|~isleaf(),~istask(),~ismilestone()|}$0"
+    ],
+    "description": "Hide tasks based on condition"
+  },
+  "Hide Resource": {
+    "prefix": "hideresource",
+    "body": [
+      "hideresource ${1|~isleaf(),isdutyof(ProjectManager)|}$0"
+    ],
+    "description": "Hide resources based on condition"
+  },
+  "Columns with Status": {
+    "prefix": "columns-status",
+    "body": [
+      "columns bsi { title 'WBS' },",
+      "\t        name,",
+      "\t        start,",
+      "\t        end,",
+      "\t        status,",
+      "\t        complete,",
+      "\t        chart { scale ${1|day,week,month|} }$0"
+    ],
+    "description": "Report columns with status tracking"
+  },
+  "Columns Financial": {
+    "prefix": "columns-financial",
+    "body": [
+      "columns name,",
+      "\t        cost,",
+      "\t        revenue,",
+      "\t        profit { cellcolor plan.profit < 0 \"#ff0000\" }$0"
+    ],
+    "description": "Financial report columns"
+  },
+  "Load Unit Hours": {
+    "prefix": "loadunit-hours",
+    "body": [
+      "loadunit hours$0"
+    ],
+    "description": "Set load unit to hours"
+  },
+  "Load Unit Days": {
+    "prefix": "loadunit-days",
+    "body": [
+      "loadunit days$0"
+    ],
+    "description": "Set load unit to days"
+  },
+  "Load Unit Weeks": {
+    "prefix": "loadunit-weeks",
+    "body": [
+      "loadunit weeks$0"
+    ],
+    "description": "Set load unit to weeks"
+  },
+  "Charge": {
+    "prefix": "charge",
+    "body": [
+      "charge ${1:account_id} ${2:100.0}$0"
+    ],
+    "description": "Charge amount to account"
+  },
+  "Alternative": {
+    "prefix": "alternative",
+    "body": [
+      "alternative ${1:task_id}$0"
+    ],
+    "description": "Define alternative task"
+  },
+  "Purge": {
+    "prefix": "purge",
+    "body": [
+      "purge ${1|task,resource,account|}$0"
+    ],
+    "description": "Purge element from project"
+  },
+  "Include": {
+    "prefix": "include",
+    "body": [
+      "include \"${1:filename.tji}\"$0"
+    ],
+    "description": "Include external file"
+  },
+  "Supplement": {
+    "prefix": "supplement",
+    "body": [
+      "supplement ${1|task,resource,account|} ${2:id} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Supplement existing element"
+  },
+  "Export Definition": {
+    "prefix": "export",
+    "body": [
+      "export ${1:definition_id} {",
+      "\t${2|task,resource,account|} ${3:element_id}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Export definitions to included files"
+  },
+  "Fail Condition": {
+    "prefix": "fail",
+    "body": [
+      "fail ${1|condition,alert|}$0"
+    ],
+    "description": "Define failure condition"
+  },
+  "Alert": {
+    "prefix": "alert",
+    "body": [
+      "alert ${1|red,yellow,green|} \"${2:Alert message}\"$0"
+    ],
+    "description": "Add status alert"
+  },
+  "Status Note": {
+    "prefix": "statusnote",
+    "body": [
+      "statusnote \"${1:Status update}\"$0"
+    ],
+    "description": "Add status note"
+  },
+  "Persistent": {
+    "prefix": "persistent",
+    "body": [
+      "persistent$0"
+    ],
+    "description": "Mark allocation as persistent"
+  },
+  "Minstart Constraint": {
+    "prefix": "minstart",
+    "body": [
+      "minstart ${1:2024-01-01}$0"
+    ],
+    "description": "Set minimum start date"
+  },
+  "Maxstart Constraint": {
+    "prefix": "maxstart",
+    "body": [
+      "maxstart ${1:2024-06-01}$0"
+    ],
+    "description": "Set maximum start date"
+  },
+  "Minend Constraint": {
+    "prefix": "minend",
+    "body": [
+      "minend ${1:2024-03-01}$0"
+    ],
+    "description": "Set minimum end date"
+  },
+  "Maxend Constraint": {
+    "prefix": "maxend",
+    "body": [
+      "maxend ${1:2024-12-31}$0"
+    ],
+    "description": "Set maximum end date"
+  },
+  "Extend Definition": {
+    "prefix": "extend",
+    "body": [
+      "extend ${1|task,resource,account,project,report|} {",
+      "\t${2|text,reference,date|} ${3:property_name} \"${4:Property Label}\"",
+      "\t$0",
+      "}"
+    ],
+    "description": "Extend elements with custom properties"
+  },
+  "Tracking Scenario": {
+    "prefix": "trackingscenario",
+    "body": [
+      "trackingscenario ${1:actual}$0"
+    ],
+    "description": "Set scenario for progress tracking"
+  },
+  "Now Reference": {
+    "prefix": "now",
+    "body": [
+      "now ${1:2024-01-15-${2:12}:${3:00}}$0"
+    ],
+    "description": "Set current time for reporting"
+  },
+  "Period": {
+    "prefix": "period",
+    "body": [
+      "period ${1:2024-01-01} - ${2:2024-12-31}$0"
+    ],
+    "description": "Set report period"
+  },
+  "Caption": {
+    "prefix": "caption",
+    "body": [
+      "caption '${1:Report description}'$0"
+    ],
+    "description": "Add report caption"
+  },
+  "Sort Tasks": {
+    "prefix": "sorttasks",
+    "body": [
+      "sorttasks ${1|nameup,namedown,startup,startdown,endup,enddown|}$0"
+    ],
+    "description": "Sort tasks in report"
+  },
+  "Sort Resources": {
+    "prefix": "sortresources",
+    "body": [
+      "sortresources ${1|nameup,namedown,startup,startdown,endup,enddown|}$0"
+    ],
+    "description": "Sort resources in report"
   }
 }

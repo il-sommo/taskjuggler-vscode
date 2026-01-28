@@ -6,22 +6,52 @@ All notable changes to the "taskjuggler-syntax" extension will be documented in 
 
 ## [0.2.2] - 2026-01-29
 
-### Fixed
-- **Expanded hover documentation**: Added 50+ more keywords
-- Now includes documentation for:
-  - Report attributes: `formats`, `html`, `csv`, `loadunit`, `columns`, `caption`, `period`
-  - Column types: `bsi`, `name`, `chart`
-  - Scheduling: `asap`, `alap`, `scheduling`
-  - Time/date: `timezone`, `workinghours`, `projectstart`, `projectend`, `now`, `today`
-  - Flags and filters: `flags`, `select`, `hidetask`, `hideresource`
-  - Functions: `hasalert`, `isresource`, `isactive`, `isdutyof`, `treelevel`
-  - Reports: `textreport`, `accountreport`, `timesheetreport`, `tracereport`, `navigator`, `icalreport`, `xmlreport`
-  - Resource management: `managers`, `leaves`, `vacation`, `booking`, `limits`
-  - Documentation: `journalentry`, `author`, `summary`, `details`
-  - Project organization: `include`, `supplement`, `purge`, `export`
-  - Sorting: `sorttasks`, `sortresources`, `rolluptask`, `rollupresource`
-- Database expanded from ~15 to 65+ documented keywords
-- Hover now works on most commonly used TaskJuggler keywords
+### Added - Complete TaskJuggler 3.x Syntax Coverage 🎯
+
+#### Comprehensive Keyword Database
+- **COMPLETE coverage of TaskJuggler 3.x syntax**: 150+ keywords (expanded from 15 in v0.0.2)
+- All keywords sourced from official TaskJuggler GitHub repository
+- Hover documentation now works for ALL TaskJuggler keywords including:
+  - **Properties**: project, task, resource, account, shift, scenario, macro, include, export, supplement, extend, flags, copyright, currency, trackingscenario
+  - **Reports**: taskreport, resourcereport, accountreport, textreport, timesheetreport, statussheetreport, tracereport, icalreport, nikureport, xmlreport, navigator
+  - **Task/Resource attributes**: allocate, alternative, chargeset, charge, complete, depends, duration, effort, efficiency, email, end, fail, gapduration, gaplength, length, limits, managers, mandatory, maxend, maxstart, minend, minstart, milestone, note, persistent, priority, projectid, purge, rate, responsible, scheduling, start, vacation, leaves, workinghours, timezone, booking
+  - **Report attributes**: formats, html, csv, xml, msp, tjp, columns, loadunit, hours, days, weeks, months, years, caption, center, headline, period, timeformat, currencyformat, numberformat, select, hidetask, hideresource, hideaccount, hidejournalentry, sorttasks, sortresources, sortaccounts, rollupresource, rolluptask, rollupaccount, taskroot, resourceroot
+  - **Column types**: bsi, name, chart, id, index, no, hierarchindex, seqno, minstart, maxstart, minend, maxend, status, statusnote, cost, revenue, profit
+  - **Functions**: isleaf, istask, ismilestone, isresource, isaccount, isactive, isongoing, hasalert, isdutyof, isallocated, ischildof, treelevel, hasresource, contains, containssubstring
+  - **Journal**: journalentry, author, summary, details, alert, alertlevel, red, yellow, green
+  - **Macros**: projectstart, projectend, now, today
+  - **Weekdays**: mon, tue, wed, thu, fri, sat, sun, off
+  - **Selection**: tree, up, down, and, or, not
+  - **Scale units**: minute, hour, day, week, month, quarter, year
+  - **Report formatting**: title, width, scale, balance, aggregate, color, fontcolor, cellcolor, celltext, halign, left, right, listtype, bullets, numbered, comma, tooltip
+  - **References**: precedes, follows, inherit
+
+#### Intelligent Snippets
+- **88 total snippets** (added 48 new intelligent snippets)
+- Snippets created from keyword database information
+- New snippet categories:
+  - **Advanced reports**: accountreport, timesheetreport, tracereport, icalreport, xmlreport
+  - **Scheduling**: asap, alap scheduling modes
+  - **Resource management**: vacation, managers, responsible, timezone
+  - **Report formatting**: loadunit variations (hours/days/weeks), financial columns, status columns
+  - **Filters**: select, hidetask, hideresource with function examples
+  - **Constraints**: minstart, maxstart, minend, maxend with proper syntax
+  - **Advanced features**: charge, alternative, purge, include, supplement, export, extend, trackingscenario
+  - **Status tracking**: alert, statusnote, fail, persistent
+  - **Sorting**: sorttasks, sortresources with sort direction options
+  - **Time references**: now, period, caption
+- All snippets include proper syntax and tab stops for efficient editing
+
+### Improved
+- **Unified keyword definitions**: Keywords that work in multiple contexts (e.g., minstart as both attribute and column) now show combined documentation
+- **Better examples**: Each keyword includes practical, context-aware examples
+- **Enhanced syntax information**: Clear syntax patterns for all keywords
+- **Category organization**: Keywords properly categorized as properties, attributes, functions, reports, or columns
+
+### Technical Changes
+- src/taskjugglerData.ts expanded from 555 lines (65 keywords) to 1396+ lines (150+ keywords)
+- Removed duplicate keyword definitions by merging multi-context keywords
+- snippets/taskjuggler.json expanded from 40 to 88 snippets
 
 ## [0.2.1] - 2026-01-29
 
