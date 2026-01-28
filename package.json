@@ -53,12 +53,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fabriziovacca/taskjuggler-vscode.git"
+    "url": "https://github.com/il-sommo/taskjuggler-vscode.git"
   },
   "bugs": {
-    "url": "https://github.com/fabriziovacca/taskjuggler-vscode/issues"
+    "url": "https://github.com/il-sommo/taskjuggler-vscode/issues"
   },
-  "homepage": "https://github.com/fabriziovacca/taskjuggler-vscode#readme",
+  "homepage": "https://github.com/il-sommo/taskjuggler-vscode#readme",
   "keywords": [
     "taskjuggler",
     "project management",

@@ -9,7 +9,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/fabriziovacca/taskjuggler-vscode.git
+git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
 
 # Install using Makefile
@@ -27,7 +27,7 @@ Then **restart VS Code**.
 
 ### Method 2: Install from VSIX
 
-1. Download the latest `.vsix` file from [Releases](https://github.com/fabriziovacca/taskjuggler-vscode/releases)
+1. Download the latest `.vsix` file from [Releases](https://github.com/il-sommo/taskjuggler-vscode/releases)
 
 2. Install via command line:
    ```bash
@@ -184,7 +184,7 @@ If you want to develop and test the extension:
 ### Setup
 ```bash
 # Clone repository
-git clone https://github.com/fabriziovacca/taskjuggler-vscode.git
+git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
 
 # Install development dependencies
@@ -253,7 +253,7 @@ Or manually upload the `.vsix` file to the marketplace website.
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/fabriziovacca/taskjuggler-vscode/issues)
+- **Issues**: [GitHub Issues](https://github.com/il-sommo/taskjuggler-vscode/issues)
 - **Email**: fabrizio.vacca@gmail.com
 - **Documentation**: [README.md](../README.md)
 

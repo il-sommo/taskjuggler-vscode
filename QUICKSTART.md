@@ -8,7 +8,7 @@ Get up and running with TaskJuggler in VS Code in just a few minutes!
 
 ### Method 1: Clone and Install
 ```bash
-git clone https://github.com/fabriziovacca/taskjuggler-vscode.git
+git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
 make install
 ```

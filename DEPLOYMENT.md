@@ -44,7 +44,7 @@
 git init
 
 # Add remote repository
-git remote add origin https://github.com/fabriziovacca/taskjuggler-vscode.git
+git remote add origin https://github.com/il-sommo/taskjuggler-vscode.git
 
 # Add all files
 git add .
@@ -67,7 +67,7 @@ git push -u origin main
 
 ### 2. Create GitHub Release
 
-1. Go to: https://github.com/fabriziovacca/taskjuggler-vscode/releases
+1. Go to: https://github.com/il-sommo/taskjuggler-vscode/releases
 2. Click "Create a new release"
 3. Tag version: `v0.0.1`
 4. Release title: `TaskJuggler Language Support v0.0.1`
@@ -96,7 +96,7 @@ code --install-extension taskjuggler-syntax-0.0.1.vsix
 
 Or clone and build:
 ```bash
-git clone https://github.com/fabriziovacca/taskjuggler-vscode.git
+git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
 make install
 ```

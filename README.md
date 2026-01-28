@@ -2,7 +2,7 @@
 
 > Complete language support for TaskJuggler project management files
 
-[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/fabriziovacca/taskjuggler-vscode)
+[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.60%2B-blue.svg)](https://code.visualstudio.com/)
 [![TaskJuggler](https://img.shields.io/badge/TaskJuggler-3.x-orange.svg)](https://taskjuggler.org)
@@ -46,7 +46,7 @@
 
 #### Via Git Clone
 ```bash
-git clone https://github.com/fabriziovacca/taskjuggler-vscode.git
+git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
 make install
 ```
@@ -234,7 +234,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for gui
 
 ```bash
 # Clone repository
-git clone https://github.com/fabriziovacca/taskjuggler-vscode.git
+git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
 
 # Install dependencies
@@ -279,9 +279,9 @@ make package
 
 ## Support
 
-- 🐛 **Bug reports**: [GitHub Issues](https://github.com/fabriziovacca/taskjuggler-vscode/issues)
-- 💡 **Feature requests**: [GitHub Issues](https://github.com/fabriziovacca/taskjuggler-vscode/issues)
-- 📚 **Documentation**: [Wiki](https://github.com/fabriziovacca/taskjuggler-vscode/wiki)
+- 🐛 **Bug reports**: [GitHub Issues](https://github.com/il-sommo/taskjuggler-vscode/issues)
+- 💡 **Feature requests**: [GitHub Issues](https://github.com/il-sommo/taskjuggler-vscode/issues)
+- 📚 **Documentation**: [Wiki](https://github.com/il-sommo/taskjuggler-vscode/wiki)
 
 ---
 

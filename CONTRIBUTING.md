@@ -203,7 +203,7 @@ taskjuggler-vscode/
 
 ## Need Help?
 
-- Check existing [issues](https://github.com/fabriziovacca/taskjuggler-vscode/issues)
+- Check existing [issues](https://github.com/il-sommo/taskjuggler-vscode/issues)
 - Review [documentation](docs/)
 - Contact: fabrizio.vacca@gmail.com
 
