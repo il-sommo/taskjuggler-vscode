@@ -4,6 +4,25 @@ All notable changes to the "taskjuggler-syntax" extension will be documented in 
 
 **Author**: Fabrizio Vacca (fabrizio.vacca@gmail.com)
 
+## [0.2.2] - 2026-01-29
+
+### Fixed
+- **Expanded hover documentation**: Added 50+ more keywords
+- Now includes documentation for:
+  - Report attributes: `formats`, `html`, `csv`, `loadunit`, `columns`, `caption`, `period`
+  - Column types: `bsi`, `name`, `chart`
+  - Scheduling: `asap`, `alap`, `scheduling`
+  - Time/date: `timezone`, `workinghours`, `projectstart`, `projectend`, `now`, `today`
+  - Flags and filters: `flags`, `select`, `hidetask`, `hideresource`
+  - Functions: `hasalert`, `isresource`, `isactive`, `isdutyof`, `treelevel`
+  - Reports: `textreport`, `accountreport`, `timesheetreport`, `tracereport`, `navigator`, `icalreport`, `xmlreport`
+  - Resource management: `managers`, `leaves`, `vacation`, `booking`, `limits`
+  - Documentation: `journalentry`, `author`, `summary`, `details`
+  - Project organization: `include`, `supplement`, `purge`, `export`
+  - Sorting: `sorttasks`, `sortresources`, `rolluptask`, `rollupresource`
+- Database expanded from ~15 to 65+ documented keywords
+- Hover now works on most commonly used TaskJuggler keywords
+
 ## [0.2.1] - 2026-01-29
 
 ### Fixed
