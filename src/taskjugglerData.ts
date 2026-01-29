@@ -1360,9 +1360,27 @@ export const completionItems: vscode.CompletionItem[] = Object.values(taskjuggle
         keyword.category === 'column' ? vscode.CompletionItemKind.Field :
         vscode.CompletionItemKind.Module
     );
-    item.detail = keyword.description;
+
+    // Add category prefix to detail to distinguish from snippets
+    const categoryLabel =
+        keyword.category === 'property' ? '[Property]' :
+        keyword.category === 'attribute' ? '[Attribute]' :
+        keyword.category === 'function' ? '[Function]' :
+        keyword.category === 'column' ? '[Column]' :
+        '[Keyword]';
+
+    item.detail = `${categoryLabel} ${keyword.description}`;
+
     if (keyword.example) {
-        item.documentation = new vscode.MarkdownString(`**Example:**\n\`\`\`taskjuggler\n${keyword.example}\n\`\`\``);
+        item.documentation = new vscode.MarkdownString(`**Syntax:**\n\`\`\`taskjuggler\n${keyword.syntax || keyword.name}\n\`\`\`\n\n**Example:**\n\`\`\`taskjuggler\n${keyword.example}\n\`\`\``);
     }
+
+    // Set sortText to make snippets appear first
+    // Snippets have no sortText (implicitly ""), so we use "z" prefix to appear after them
+    item.sortText = `z${keyword.name}`;
+
+    // Insert only the keyword name (not a snippet)
+    item.insertText = keyword.name;
+
     return item;
 });
