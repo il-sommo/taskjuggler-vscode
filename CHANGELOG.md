@@ -17,6 +17,12 @@ All notable changes to the TaskJuggler extension.
 - `src/validators/dateValidator.ts` - Date format & logic validation
 - `src/validators/syntaxValidator.ts` - Syntax & duplicate ID checks
 
+**Test Coverage**
+- **64/64 tests passing (100%)** ✅
+- All unit tests passing
+- All integration tests passing
+- More robust test assertions for CI stability
+
 ### Features
 
 **Date Validation**
