@@ -2,6 +2,97 @@
 
 All notable changes to the TaskJuggler extension.
 
+## [0.5.5] - 2026-01-31
+
+### 🎉 Major Release - Comprehensive Improvements
+
+**Enhanced Reference Detection (NEW!)**
+- ✅ **Extended Task References** - Find references in `depends`, `precedes`, `follows`, `supplement task`
+- ✅ **Extended Resource References** - Find references in `allocate`, `responsible`, `shifts`, `supplement resource`
+- 🔍 **Complete Coverage** - All major TaskJuggler reference contexts supported
+- ✏️ **Smart Rename** - Rename updates all reference types automatically
+
+**Workspace Search Improvements (NEW!)**
+- 🚀 **No File Limit** - Search all `.tjp` and `.tji` files in workspace (removed 100 file limit)
+- 📊 **Account Search** - Accounts now included in workspace symbol search (Ctrl+T)
+- ⚡ **Better Performance** - Optimized search across large projects
+
+**Attribute Visibility in Outline (NEW!)**
+- 👁️ **Task Attributes** - Outline shows effort, duration, allocated resources
+- 📋 **Resource Attributes** - Outline shows rate, efficiency, daily limits
+- 🎯 **At-a-Glance Info** - Example: `dev - Development [10d, john]`
+- 🏁 **Milestone Indicator** - Milestone tasks clearly marked in outline
+
+**Examples:**
+
+```taskjuggler
+# Enhanced task references
+task spec "Specification" {}
+task dev "Development" {
+    depends !spec      # Found by reference provider
+    precedes !test     # Found by reference provider
+}
+task test "Testing" {
+    follows !dev       # Found by reference provider
+}
+supplement task dev {  # Found by reference provider
+    note "Extra info"
+}
+
+# Enhanced resource references
+resource john "John Doe" {}
+task impl "Implementation" {
+    allocate john      # Found by reference provider
+    responsible john   # Found by reference provider
+}
+supplement resource john {  # Found by reference provider
+    email "john@example.com"
+}
+
+# Attribute visibility in outline
+task dev "Development" {
+    effort 10d         # Shows as: dev - Development [10d, john]
+    allocate john
+}
+
+resource john "John Doe" {
+    rate 500.0         # Shows as: john - John Doe [€500, 90%]
+    efficiency 0.9
+}
+```
+
+**New Features Summary:**
+
+1. **Task References** - `depends`, `precedes`, `follows`, `supplement task`
+2. **Resource References** - `allocate`, `responsible`, `shifts`, `supplement resource`
+3. **Workspace Search** - No limit, includes accounts
+4. **Outline Details** - Shows effort, duration, allocate, rate, efficiency, milestone
+
+**Test Coverage**
+- **121/121 tests passing (100%)** ✅
+- +17 new comprehensive tests
+- All reference contexts tested
+- Attribute extraction tested
+- Integration tests passing
+
+**Technical Changes**
+- Enhanced `ReferenceProvider` with 8 reference patterns
+- Enhanced `RenameProvider` with matching patterns
+- Updated `WorkspaceSymbolProvider` (no limit, accounts)
+- Extended `DocumentSymbolProvider` with attribute extraction
+- New helper methods: `extractTaskAttributes()`, `extractResourceAttributes()`
+
+**New Files**
+- `src/test/suite/v0.5.5.test.ts` - Comprehensive test suite (17 tests)
+
+**Files Modified**
+- `src/referenceProvider.ts` - 4 new reference patterns each for tasks/resources
+- `src/renameProvider.ts` - Matching rename support
+- `src/workspaceSymbolProvider.ts` - No limit, account support
+- `src/documentSymbolProvider.ts` - Attribute visibility
+
+---
+
 ## [0.5.1] - 2026-01-31
 
 ### 🎯 Quick Fixes - Account Support & Nested Tasks

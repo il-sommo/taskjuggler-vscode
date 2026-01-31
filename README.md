@@ -2,11 +2,11 @@
 
 > Complete language support for TaskJuggler 3.x project management files
 
-[![Version](https://img.shields.io/badge/version-0.5.0-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Version](https://img.shields.io/badge/version-0.5.5-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.108%2B-blue.svg)](https://code.visualstudio.com/)
 [![TaskJuggler](https://img.shields.io/badge/TaskJuggler-3.x-orange.svg)](https://taskjuggler.org)
-[![Tests](https://img.shields.io/badge/tests-95%2F95%20passing-brightgreen.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Tests](https://img.shields.io/badge/tests-121%2F121%20passing-brightgreen.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 
 ## Features
 
@@ -45,22 +45,25 @@
 - 🔧 **Smart Indentation** - Automatic nesting based on braces
 - ⚙️ **Configurable** - Respects tab size and spaces/tabs settings
 
-### Navigation & Refactoring (v0.5.0)
-- 📑 **Outline View** - See all tasks/resources in sidebar
-- 🔍 **Find References (Shift+F12)** - Find where symbols are used
-- ✏️ **Rename (F2)** - Safely rename tasks/resources everywhere
+### Navigation & Refactoring (v0.5.x)
+- 📑 **Enhanced Outline View** - Tasks/resources with attributes visible (v0.5.5)
+- 🔍 **Comprehensive Find References** - `depends`, `precedes`, `follows`, `supplement`, `allocate`, `responsible`, `shifts` (v0.5.5)
+- ✏️ **Smart Rename (F2)** - Safely rename tasks/resources/accounts everywhere (v0.5.1)
 - 🔎 **Go to Symbol (Ctrl+Shift+O)** - Quick navigation
-- 🌐 **Workspace Search (Ctrl+T)** - Search across all files
+- 🌐 **Unlimited Workspace Search (Ctrl+T)** - Search all files, no limits (v0.5.5)
 - 🍞 **Breadcrumbs** - Navigate document structure
+- 🌳 **Nested Tasks** - Hierarchical outline with parent-child relationships (v0.5.1)
+- 📊 **Accounts** - Full account support in outline and search (v0.5.1)
 
-**Navigation:**
-- Click on task in depends → jump to definition
+**Navigation Features:**
+- Click on task in `depends` → jump to definition
 - F2 on task → rename with validation
-- Shift+F12 → see all usages
-- Outline view shows full structure
+- Shift+F12 → see all usages in all contexts
+- Outline shows: `dev - Development [10d, john]` (v0.5.5)
+- Nested tasks in outline hierarchy (v0.5.1)
 
 ### Quality
-- ✅ **100% Test Coverage** - All 95 tests passing (v0.5.0)
+- ✅ **100% Test Coverage** - All 121 tests passing (v0.5.5)
 - 🚀 **Production Ready** - Stable and reliable
 - 🔄 **CI Tested** - Continuous integration validation
 
@@ -155,6 +158,89 @@ resource john "John Doe" {
 - ✅ Shows parameter hints while typing
 - ✅ Suggests dates (today, tomorrow, etc.)
 - ✅ Completes task/resource references
+
+## Enhanced Navigation (v0.5.5)
+
+### Comprehensive Reference Detection
+
+The extension now finds references in **all TaskJuggler contexts**:
+
+**Task References:**
+```taskjuggler
+task spec "Specification" {}
+
+task dev "Development" {
+    depends !spec      # Shift+F12 on spec → finds this
+    precedes !test     # F2 on test → renames here too
+}
+
+task test "Testing" {
+    follows !dev       # Reference found automatically
+}
+
+supplement task dev {  # supplement references found
+    note "Additional info"
+}
+```
+
+**Resource References:**
+```taskjuggler
+resource john "John Doe" {}
+
+task impl "Implementation" {
+    allocate john      # All references detected
+    responsible john   # Shift+F12 shows all usages
+}
+
+resource team {
+    shifts john        # Even shifts references found
+}
+
+supplement resource john {  # supplement detected
+    email "john@example.com"
+}
+```
+
+**Reference Patterns Detected:**
+- Tasks: `depends`, `precedes`, `follows`, `supplement task`
+- Resources: `allocate`, `responsible`, `shifts`, `supplement resource`
+- Accounts: `charge`, `revenue`, `purge`, `supplement account`
+
+### Attribute Visibility in Outline
+
+The outline view now shows **key attributes** for each symbol:
+
+**Before (v0.5.0):**
+```
+📋 Tasks
+  - dev - Development
+  - test - Testing
+👥 Resources
+  - john - John Doe
+```
+
+**After (v0.5.5):**
+```
+📋 Tasks
+  - dev - Development [10d, john]      # Shows effort & allocate
+  - launch - Product Launch [milestone] # Shows milestone flag
+👥 Resources
+  - john - John Doe [€500, 90%]        # Shows rate & efficiency
+```
+
+**Visible Attributes:**
+- **Tasks:** effort, duration, allocate, milestone flag
+- **Resources:** rate, efficiency, daily limits
+
+### Unlimited Workspace Search
+
+**Before (v0.5.0):** Limited to 100 files
+**After (v0.5.5):** No limit - searches **all** `.tjp` and `.tji` files
+
+Press `Ctrl+T` to search across your entire project:
+- Search tasks, resources, scenarios, **and accounts**
+- No file count restrictions
+- Works with large multi-file projects
 
 ## Documentation
 

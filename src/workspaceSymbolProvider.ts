@@ -18,11 +18,11 @@ export class TaskJugglerWorkspaceSymbolProvider implements vscode.WorkspaceSymbo
         const symbols: vscode.SymbolInformation[] = [];
 
         try {
-            // Find all .tjp and .tji files in workspace
+            // Find all .tjp and .tji files in workspace (no limit)
             const files = await vscode.workspace.findFiles(
                 '**/*.{tjp,tji}',
-                '**/node_modules/**',
-                100 // Limit to 100 files
+                '**/node_modules/**'
+                // No file limit - search all TaskJuggler files
             );
 
             for (const file of files) {
@@ -83,6 +83,23 @@ export class TaskJugglerWorkspaceSymbolProvider implements vscode.WorkspaceSymbo
                                 vscode.SymbolKind.Namespace,
                                 'Scenarios',
                                 new vscode.Location(file, scenario.range)
+                            );
+                            symbols.push(symbol);
+                        }
+                    });
+
+                    // Add matching accounts
+                    parsed.accounts.forEach((account) => {
+                        const id = account.id;
+                        const name = account.name || '';
+                        if (!query || id.toLowerCase().includes(lowerQuery) ||
+                            name.toLowerCase().includes(lowerQuery)) {
+
+                            const symbol = new vscode.SymbolInformation(
+                                `${id} - ${name || id}`,
+                                vscode.SymbolKind.Enum,
+                                'Accounts',
+                                new vscode.Location(file, account.range)
                             );
                             symbols.push(symbol);
                         }

@@ -78,48 +78,72 @@ export class TaskJugglerReferenceProvider implements vscode.ReferenceProvider {
     }
 
     /**
-     * Find all references to a task (in depends statements)
+     * Find all references to a task (in depends, precedes, follows, supplement statements)
      */
     private findTaskReferences(document: vscode.TextDocument, taskId: string): vscode.Range[] {
         const references: vscode.Range[] = [];
+
+        // Match patterns:
+        // - depends !taskId or depends taskId
+        // - precedes !taskId or precedes taskId
+        // - follows !taskId or follows taskId
+        // - supplement task taskId
         const dependsRegex = new RegExp(`\\bdepends\\s+!?(${taskId})\\b`, 'g');
+        const precedesRegex = new RegExp(`\\bprecedes\\s+!?(${taskId})\\b`, 'g');
+        const followsRegex = new RegExp(`\\bfollows\\s+!?(${taskId})\\b`, 'g');
+        const supplementRegex = new RegExp(`\\bsupplement\\s+task\\s+(${taskId})\\b`, 'g');
 
         for (let i = 0; i < document.lineCount; i++) {
             const line = document.lineAt(i);
-            let match;
 
-            while ((match = dependsRegex.exec(line.text)) !== null) {
-                const startChar = match.index + match[0].indexOf(taskId);
-                const range = new vscode.Range(
-                    i, startChar,
-                    i, startChar + taskId.length
-                );
-                references.push(range);
-            }
+            // Check all patterns
+            [dependsRegex, precedesRegex, followsRegex, supplementRegex].forEach(regex => {
+                let match;
+                while ((match = regex.exec(line.text)) !== null) {
+                    const startChar = match.index + match[0].indexOf(taskId);
+                    const range = new vscode.Range(
+                        i, startChar,
+                        i, startChar + taskId.length
+                    );
+                    references.push(range);
+                }
+            });
         }
 
         return references;
     }
 
     /**
-     * Find all references to a resource (in allocate statements)
+     * Find all references to a resource (in allocate, responsible, shifts, supplement statements)
      */
     private findResourceReferences(document: vscode.TextDocument, resourceId: string): vscode.Range[] {
         const references: vscode.Range[] = [];
+
+        // Match patterns:
+        // - allocate resourceId
+        // - responsible resourceId
+        // - shifts shiftId (if resourceId is a shift)
+        // - supplement resource resourceId
         const allocateRegex = new RegExp(`\\ballocate\\s+(${resourceId})\\b`, 'g');
+        const responsibleRegex = new RegExp(`\\bresponsible\\s+(${resourceId})\\b`, 'g');
+        const shiftsRegex = new RegExp(`\\bshifts\\s+(${resourceId})\\b`, 'g');
+        const supplementRegex = new RegExp(`\\bsupplement\\s+resource\\s+(${resourceId})\\b`, 'g');
 
         for (let i = 0; i < document.lineCount; i++) {
             const line = document.lineAt(i);
-            let match;
 
-            while ((match = allocateRegex.exec(line.text)) !== null) {
-                const startChar = match.index + match[0].indexOf(resourceId);
-                const range = new vscode.Range(
-                    i, startChar,
-                    i, startChar + resourceId.length
-                );
-                references.push(range);
-            }
+            // Check all patterns
+            [allocateRegex, responsibleRegex, shiftsRegex, supplementRegex].forEach(regex => {
+                let match;
+                while ((match = regex.exec(line.text)) !== null) {
+                    const startChar = match.index + match[0].indexOf(resourceId);
+                    const range = new vscode.Range(
+                        i, startChar,
+                        i, startChar + resourceId.length
+                    );
+                    references.push(range);
+                }
+            });
         }
 
         return references;

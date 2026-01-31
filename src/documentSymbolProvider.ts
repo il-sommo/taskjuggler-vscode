@@ -48,7 +48,7 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
     }
 
     /**
-     * Create symbols for tasks with hierarchy support
+     * Create symbols for tasks with hierarchy support and attribute visibility
      */
     private createTaskSymbols(
         tasks: any[],
@@ -57,12 +57,15 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
         const symbols: vscode.DocumentSymbol[] = [];
         const symbolMap = new Map<string, vscode.DocumentSymbol>();
 
-        // First pass: create all symbols
+        // First pass: create all symbols with attributes
         tasks.forEach((task) => {
             const id = task.id;
+            const attributes = this.extractTaskAttributes(task, document);
+            const detail = attributes.length > 0 ? `[${attributes.join(', ')}]` : task.type || 'task';
+
             const symbol = new vscode.DocumentSymbol(
                 `${id} - ${task.name || id}`,
-                task.type || 'task',
+                detail,
                 vscode.SymbolKind.Function,
                 task.range,
                 task.range
@@ -95,7 +98,7 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
     }
 
     /**
-     * Create symbols for resources
+     * Create symbols for resources with attribute visibility
      */
     private createResourceSymbols(
         resources: any[],
@@ -105,9 +108,12 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
 
         resources.forEach((resource) => {
             const id = resource.id;
+            const attributes = this.extractResourceAttributes(resource, document);
+            const detail = attributes.length > 0 ? `[${attributes.join(', ')}]` : resource.type || 'resource';
+
             const symbol = new vscode.DocumentSymbol(
                 `${id} - ${resource.name || id}`,
-                resource.type || 'resource',
+                detail,
                 vscode.SymbolKind.Class,
                 resource.range,
                 resource.range
@@ -167,5 +173,91 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
         });
 
         return symbols;
+    }
+
+    /**
+     * Extract key attributes from task definition (effort, duration, allocate)
+     */
+    private extractTaskAttributes(task: any, document: vscode.TextDocument): string[] {
+        const attributes: string[] = [];
+        const startLine = task.range.start.line;
+
+        // Look for attributes in the next 20 lines (or until next block starts)
+        const maxLines = Math.min(startLine + 20, document.lineCount);
+
+        for (let i = startLine + 1; i < maxLines; i++) {
+            const line = document.lineAt(i).text.trim();
+
+            // Stop at closing brace or next definition
+            if (line === '}' || /^(task|resource|account|report|project)\s/.test(line)) {
+                break;
+            }
+
+            // Extract effort: "effort 10d" -> "10d"
+            const effortMatch = line.match(/^\s*effort\s+(\S+)/);
+            if (effortMatch) {
+                attributes.push(effortMatch[1]);
+            }
+
+            // Extract duration: "duration 5d" -> "5d"
+            const durationMatch = line.match(/^\s*duration\s+(\S+)/);
+            if (durationMatch) {
+                attributes.push(durationMatch[1]);
+            }
+
+            // Extract allocate: "allocate john" -> "john"
+            const allocateMatch = line.match(/^\s*allocate\s+([a-zA-Z_][a-zA-Z0-9_]*)/);
+            if (allocateMatch) {
+                attributes.push(allocateMatch[1]);
+            }
+
+            // Extract milestone flag
+            if (line.match(/^\s*milestone\s*$/)) {
+                attributes.push('milestone');
+            }
+        }
+
+        return attributes;
+    }
+
+    /**
+     * Extract key attributes from resource definition (rate, limits, efficiency)
+     */
+    private extractResourceAttributes(resource: any, document: vscode.TextDocument): string[] {
+        const attributes: string[] = [];
+        const startLine = resource.range.start.line;
+
+        // Look for attributes in the next 20 lines
+        const maxLines = Math.min(startLine + 20, document.lineCount);
+
+        for (let i = startLine + 1; i < maxLines; i++) {
+            const line = document.lineAt(i).text.trim();
+
+            // Stop at closing brace or next definition
+            if (line === '}' || /^(task|resource|account|report|project)\s/.test(line)) {
+                break;
+            }
+
+            // Extract rate: "rate 500.0" -> "€500"
+            const rateMatch = line.match(/^\s*rate\s+([\d.]+)/);
+            if (rateMatch) {
+                attributes.push(`€${rateMatch[1]}`);
+            }
+
+            // Extract limits: "limits { dailymax 8h }" -> "8h/day"
+            const limitsMatch = line.match(/^\s*limits\s*\{\s*dailymax\s+(\S+)/);
+            if (limitsMatch) {
+                attributes.push(`${limitsMatch[1]}/day`);
+            }
+
+            // Extract efficiency: "efficiency 0.8" -> "80%"
+            const efficiencyMatch = line.match(/^\s*efficiency\s+([\d.]+)/);
+            if (efficiencyMatch) {
+                const percent = Math.round(parseFloat(efficiencyMatch[1]) * 100);
+                attributes.push(`${percent}%`);
+            }
+        }
+
+        return attributes;
     }
 }
