@@ -2,6 +2,67 @@
 
 All notable changes to the TaskJuggler extension.
 
+## [0.5.1] - 2026-01-31
+
+### 🎯 Quick Fixes - Account Support & Nested Tasks
+
+**Account Support (NEW!)**
+- ✅ **Account Parsing** - Full support for `account` definitions
+- 📑 **Account in Outline** - Accounts appear in document symbol outline
+- 🔍 **Account References** - Find all references in `charge`, `revenue`, `purge` statements
+- ✏️ **Account Rename** - F2 refactoring works for accounts
+- ✅ **Account Validation** - Prevents duplicate account IDs
+
+**Nested Task Hierarchy (NEW!)**
+- 🌳 **Hierarchical Outline** - Tasks show proper parent-child relationships
+- 📊 **Multi-Level Nesting** - Supports unlimited nesting depth
+- 🔧 **Brace-Depth Tracking** - Accurate parsing using brace depth instead of indentation
+- 🎯 **Parent References** - Child tasks correctly track their parent
+
+**Examples:**
+
+```taskjuggler
+# Account support
+account costs "Project Costs"
+task dev "Development" {
+    charge 1000 costs    # F2 on costs → rename everywhere
+}
+
+# Nested tasks
+task parent "Parent Task" {
+    task child1 "Child 1" {
+        task grandchild "Grandchild" {
+            # Multi-level nesting works!
+        }
+    }
+    task child2 "Child 2" {}
+}
+# Outline shows:
+# - Tasks
+#   - parent
+#     - child1
+#       - grandchild
+#     - child2
+```
+
+**New Files**
+- `src/test/suite/v0.5.1.test.ts` - 10 tests for account and nested task features
+
+**Test Coverage**
+- **104/104 tests passing (100%)** ✅
+- +10 new tests for accounts and nested tasks
+- All providers updated and tested
+
+**Technical Changes**
+- Extended `Symbol` interface with `parent?: string` and `children?: Symbol[]`
+- Added `accounts: Symbol[]` to `ParsedDocument`
+- Parser uses brace depth tracking for accurate nesting
+- DocumentSymbolProvider builds hierarchy in two passes
+- ReferenceProvider finds account references (charge/revenue/purge)
+- RenameProvider validates and renames accounts safely
+
+---
+
 ## [0.5.0] - 2026-01-31
 
 ### 🎉 Major Release - Navigation & Refactoring

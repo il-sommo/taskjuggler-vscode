@@ -28,10 +28,11 @@ export class TaskJugglerRenameProvider implements vscode.RenameProvider {
             const word = document.getText(wordRange);
             const parsed = this.parser.parseDocument(document);
 
-            // Check if this is a valid symbol (task or resource)
+            // Check if this is a valid symbol (task, resource, or account)
             const isTask = parsed.tasks.some(t => t.id === word);
             const isResource = parsed.resources.some(r => r.id === word);
-            if (isTask || isResource) {
+            const isAccount = parsed.accounts.some(a => a.id === word);  // NEW
+            if (isTask || isResource || isAccount) {
                 return wordRange;
             }
 
@@ -70,7 +71,8 @@ export class TaskJugglerRenameProvider implements vscode.RenameProvider {
 
             // Check if new name already exists
             const nameExists = parsed.tasks.some(t => t.id === newName) ||
-                             parsed.resources.some(r => r.id === newName);
+                             parsed.resources.some(r => r.id === newName) ||
+                             parsed.accounts.some(a => a.id === newName);  // NEW
             if (nameExists) {
                 vscode.window.showErrorMessage(
                     `Cannot rename: ${newName} already exists.`
@@ -80,9 +82,10 @@ export class TaskJugglerRenameProvider implements vscode.RenameProvider {
 
             const edit = new vscode.WorkspaceEdit();
 
-            // Determine if this is a task or resource
+            // Determine if this is a task, resource, or account
             const task = parsed.tasks.find(t => t.id === oldName);
             const resource = parsed.resources.find(r => r.id === oldName);
+            const account = parsed.accounts.find(a => a.id === oldName);  // NEW
 
             if (task) {
                 // Rename task definition
@@ -100,6 +103,16 @@ export class TaskJugglerRenameProvider implements vscode.RenameProvider {
 
                 // Rename all resource references (in allocate)
                 const references = this.findResourceReferences(document, oldName);
+                references.forEach(range => {
+                    edit.replace(document.uri, range, newName);
+                });
+
+            } else if (account) {  // NEW
+                // Rename account definition
+                edit.replace(document.uri, account.range, newName);
+
+                // Rename all account references (in charge, revenue, purge)
+                const references = this.findAccountReferences(document, oldName);
                 references.forEach(range => {
                     edit.replace(document.uri, range, newName);
                 });
@@ -160,6 +173,53 @@ export class TaskJugglerRenameProvider implements vscode.RenameProvider {
                 const range = new vscode.Range(
                     i, startChar,
                     i, startChar + resourceId.length
+                );
+                references.push(range);
+            }
+        }
+
+        return references;
+    }
+
+    /**
+     * Find all references to an account
+     */
+    private findAccountReferences(document: vscode.TextDocument, accountId: string): vscode.Range[] {
+        const references: vscode.Range[] = [];
+        const chargeRegex = new RegExp(`\\bcharge\\s+(\\d+(?:\\.\\d+)?)\\s+(${accountId})\\b`, 'g');
+        const revenueRegex = new RegExp(`\\brevenue\\s+${accountId}\\b`, 'g');
+        const purgeRegex = new RegExp(`\\bpurge\\s+${accountId}\\b`, 'g');
+
+        for (let i = 0; i < document.lineCount; i++) {
+            const line = document.lineAt(i);
+            let match;
+
+            // Check charge statements
+            while ((match = chargeRegex.exec(line.text)) !== null) {
+                const startChar = match.index + match[0].indexOf(accountId);
+                const range = new vscode.Range(
+                    i, startChar,
+                    i, startChar + accountId.length
+                );
+                references.push(range);
+            }
+
+            // Check revenue statements
+            while ((match = revenueRegex.exec(line.text)) !== null) {
+                const startChar = match.index + match[0].indexOf(accountId);
+                const range = new vscode.Range(
+                    i, startChar,
+                    i, startChar + accountId.length
+                );
+                references.push(range);
+            }
+
+            // Check purge statements
+            while ((match = purgeRegex.exec(line.text)) !== null) {
+                const startChar = match.index + match[0].indexOf(accountId);
+                const range = new vscode.Range(
+                    i, startChar,
+                    i, startChar + accountId.length
                 );
                 references.push(range);
             }

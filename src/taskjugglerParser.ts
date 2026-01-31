@@ -4,7 +4,9 @@ export interface Symbol {
     id: string;
     name: string;
     range: vscode.Range;
-    type: 'task' | 'resource' | 'macro' | 'scenario';
+    type: 'task' | 'resource' | 'macro' | 'scenario' | 'account';
+    parent?: string;  // For nested tasks
+    children?: Symbol[];  // For hierarchy
 }
 
 export interface ParsedDocument {
@@ -12,6 +14,7 @@ export interface ParsedDocument {
     resources: Symbol[];
     macros: Symbol[];
     scenarios: Symbol[];
+    accounts: Symbol[];  // NEW
 }
 
 export interface ParserContext {
@@ -31,17 +34,23 @@ export class TaskJugglerParser {
             tasks: [],
             resources: [],
             macros: [],
-            scenarios: []
+            scenarios: [],
+            accounts: []  // NEW
         };
 
         const text = document.getText();
         const lines = text.split('\n');
+
+        // Track nested task hierarchy
+        const taskStack: Array<{ id: string; braceDepth: number }> = [];
+        let braceDepth = 0;
 
         // Regex patterns for different symbol types
         const taskPattern = /^\s*task\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+"([^"]+)"/;
         const resourcePattern = /^\s*resource\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+"([^"]+)"/;
         const macroPattern = /^\s*macro\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+\[/;
         const scenarioPattern = /^\s*scenario\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+"([^"]+)"/;
+        const accountPattern = /^\s*account\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+"([^"]+)"/;  // NEW
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
@@ -54,13 +63,44 @@ export class TaskJugglerParser {
             // Check for task definition
             let match = line.match(taskPattern);
             if (match) {
-                result.tasks.push({
-                    id: match[1],
+                const taskId = match[1];
+                // Find parent task at current brace depth
+                let parent: string | undefined = undefined;
+                for (let j = taskStack.length - 1; j >= 0; j--) {
+                    if (taskStack[j].braceDepth < braceDepth) {
+                        parent = taskStack[j].id;
+                        break;
+                    }
+                }
+
+                const task: Symbol = {
+                    id: taskId,
                     name: match[2],
                     range: new vscode.Range(i, 0, i, line.length),
-                    type: 'task'
-                });
-                continue;
+                    type: 'task',
+                    parent: parent,
+                    children: []
+                };
+
+                result.tasks.push(task);
+
+                // Track opening brace on same line
+                if (line.includes('{')) {
+                    taskStack.push({ id: taskId, braceDepth: braceDepth });
+                    braceDepth++;
+                }
+            } else if (line.includes('{')) {
+                // Opening brace not on task line
+                braceDepth++;
+            }
+
+            // Track closing braces
+            if (line.includes('}')) {
+                braceDepth--;
+                // Pop tasks that were at this depth or deeper
+                while (taskStack.length > 0 && taskStack[taskStack.length - 1].braceDepth > braceDepth) {
+                    taskStack.pop();
+                }
             }
 
             // Check for resource definition
@@ -94,8 +134,23 @@ export class TaskJugglerParser {
                     id: match[1],
                     name: match[2],
                     range: new vscode.Range(i, 0, i, line.length),
-                    type: 'scenario'
+                    type: 'scenario',
+                    children: []
                 });
+                continue;
+            }
+
+            // Check for account definition (NEW)
+            match = line.match(accountPattern);
+            if (match) {
+                result.accounts.push({
+                    id: match[1],
+                    name: match[2],
+                    range: new vscode.Range(i, 0, i, line.length),
+                    type: 'account',
+                    children: []
+                });
+                continue;
             }
         }
 
@@ -109,7 +164,7 @@ export class TaskJugglerParser {
         const parsed = this.parseDocument(document);
 
         // Search in all symbol collections
-        for (const symbols of [parsed.tasks, parsed.resources, parsed.macros, parsed.scenarios]) {
+        for (const symbols of [parsed.tasks, parsed.resources, parsed.macros, parsed.scenarios, parsed.accounts]) {
             const found = symbols.find(s => s.id === symbolId);
             if (found) {
                 return found;

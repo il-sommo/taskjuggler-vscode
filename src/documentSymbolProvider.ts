@@ -23,6 +23,7 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
             // Create sections for different symbol types
             const taskSymbols = this.createTaskSymbols(parsed.tasks, document);
             const resourceSymbols = this.createResourceSymbols(parsed.resources, document);
+            const accountSymbols = this.createAccountSymbols(parsed.accounts, document);  // NEW
             const scenarioSymbols = this.createScenarioSymbols(parsed.scenarios, document);
 
             // Add sections if they have content
@@ -31,6 +32,9 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
             }
             if (resourceSymbols.length > 0) {
                 symbols.push(...resourceSymbols);
+            }
+            if (accountSymbols.length > 0) {  // NEW
+                symbols.push(...accountSymbols);
             }
             if (scenarioSymbols.length > 0) {
                 symbols.push(...scenarioSymbols);
@@ -44,14 +48,16 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
     }
 
     /**
-     * Create symbols for tasks
+     * Create symbols for tasks with hierarchy support
      */
     private createTaskSymbols(
         tasks: any[],
         document: vscode.TextDocument
     ): vscode.DocumentSymbol[] {
         const symbols: vscode.DocumentSymbol[] = [];
+        const symbolMap = new Map<string, vscode.DocumentSymbol>();
 
+        // First pass: create all symbols
         tasks.forEach((task) => {
             const id = task.id;
             const symbol = new vscode.DocumentSymbol(
@@ -62,38 +68,27 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
                 task.range
             );
 
-            // Add task details as children
-            const children: vscode.DocumentSymbol[] = [];
+            symbolMap.set(id, symbol);
+        });
 
-            // Add effort/duration if present
-            if (task.effort) {
-                const effortSymbol = new vscode.DocumentSymbol(
-                    `effort: ${task.effort}`,
-                    '',
-                    vscode.SymbolKind.Property,
-                    task.range,
-                    task.range
-                );
-                children.push(effortSymbol);
+        // Second pass: build hierarchy
+        tasks.forEach((task) => {
+            const symbol = symbolMap.get(task.id);
+            if (!symbol) return;
+
+            if (task.parent) {
+                // This is a nested task - add to parent's children
+                const parentSymbol = symbolMap.get(task.parent);
+                if (parentSymbol) {
+                    parentSymbol.children.push(symbol);
+                } else {
+                    // Parent not found, add to root
+                    symbols.push(symbol);
+                }
+            } else {
+                // Root level task
+                symbols.push(symbol);
             }
-
-            if (task.duration) {
-                const durationSymbol = new vscode.DocumentSymbol(
-                    `duration: ${task.duration}`,
-                    '',
-                    vscode.SymbolKind.Property,
-                    task.range,
-                    task.range
-                );
-                children.push(durationSymbol);
-            }
-
-            // Add children symbols to parent
-            if (children.length > 0) {
-                children.forEach(child => symbol.children.push(child));
-            }
-
-            symbols.push(symbol);
         });
 
         return symbols;
@@ -141,6 +136,31 @@ export class TaskJugglerDocumentSymbolProvider implements vscode.DocumentSymbolP
                 vscode.SymbolKind.Namespace,
                 scenario.range,
                 scenario.range
+            );
+
+            symbols.push(symbol);
+        });
+
+        return symbols;
+    }
+
+    /**
+     * Create symbols for accounts (NEW)
+     */
+    private createAccountSymbols(
+        accounts: any[],
+        document: vscode.TextDocument
+    ): vscode.DocumentSymbol[] {
+        const symbols: vscode.DocumentSymbol[] = [];
+
+        accounts.forEach((account) => {
+            const id = account.id;
+            const symbol = new vscode.DocumentSymbol(
+                `${id} - ${account.name || id}`,
+                'account',
+                vscode.SymbolKind.Enum,
+                account.range,
+                account.range
             );
 
             symbols.push(symbol);
