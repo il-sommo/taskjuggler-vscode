@@ -148,6 +148,110 @@
 - Outline view in sidebar
 - Minimap integration
 
+## 🚀 Advanced Language Features (v0.5.x)
+
+### Navigation & Refactoring (v0.5.0+)
+
+#### Document Symbols & Outline (v0.5.0)
+- **Hierarchical Outline** - Tasks show nested parent-child relationships (v0.5.1)
+- **Symbol Types** - Tasks, Resources, Scenarios, Accounts (v0.5.1)
+- **Attribute Visibility** - Key attributes shown in outline (v0.5.5)
+  - Tasks: `dev - Development [10d, john]` (effort, duration, allocate, milestone)
+  - Resources: `john - John Doe [€500, 90%]` (rate, efficiency, limits)
+- **Quick Navigation** - Ctrl+Shift+O to jump to any symbol
+- **Breadcrumb Navigation** - Document structure in editor top bar
+
+#### Find All References (v0.5.0+)
+**Task References** (v0.5.5):
+- `depends !taskId` - Task dependencies
+- `precedes !taskId` - Tasks that must come before
+- `follows !taskId` - Tasks that must come after
+- `supplement task taskId` - Task supplements
+
+**Resource References** (v0.5.5):
+- `allocate resourceId` - Resource allocations
+- `responsible resourceId` - Task responsibility
+- `shifts shiftId` - Work shift assignments
+- `supplement resource resourceId` - Resource supplements
+
+**Account References** (v0.5.1):
+- `charge amount accountId` - Cost charging
+- `revenue accountId` - Revenue assignment
+- `purge accountId` - Account purging
+
+**Usage:**
+- Shift+F12 on any symbol → find all usages
+- Includes declaration if requested
+- Works across all reference contexts
+
+#### Rename Refactoring (v0.5.0+)
+- **Safe Rename (F2)** - Rename tasks, resources, accounts everywhere
+- **Validation** - Prevents invalid names and duplicates (v0.5.1)
+- **All References** - Updates all reference types automatically (v0.5.5)
+- **Preview** - See all changes before applying
+
+**Rename Support:**
+- Tasks → updates depends, precedes, follows, supplement
+- Resources → updates allocate, responsible, shifts, supplement
+- Accounts → updates charge, revenue, purge (v0.5.1)
+
+#### Workspace Symbol Search (v0.5.0+)
+- **Cross-File Search** - Ctrl+T to search all .tjp and .tji files
+- **No Limits** - Removed 100 file limit (v0.5.5)
+- **All Symbol Types** - Tasks, Resources, Scenarios, Accounts (v0.5.5)
+- **Smart Filtering** - Search by ID or name
+- **Large Projects** - Optimized for multi-file projects
+
+### Context-Aware IntelliSense (v0.3.0+)
+
+#### Smart Completions
+- **Block-Aware** - Different suggestions in task/resource/project/report blocks
+- **Used Attribute Filtering** - Excludes already-defined attributes
+- **Reference Completion** - Auto-complete task/resource IDs
+- **Date Suggestions** - today, tomorrow, next week, next month
+
+#### Signature Help (v0.3.0)
+- **Parameter Hints** - Shows syntax while typing
+- **15+ Signatures** - effort, allocate, depends, start, rate, limits, etc.
+- **Documentation** - Inline help with examples
+- **Triggered** - Activates on space and dash
+
+#### Quick Start (v0.3.0)
+- **Empty File Detection** - Auto-prompt for templates
+- **Templates** - Full Project Template or Simple Task
+- **Non-intrusive** - Dismissible, one-time per file
+
+### Validation & Diagnostics (v0.4.0)
+
+#### Real-time Validation
+- **Syntax Checking** - Unclosed/unmatched braces
+- **Date Format** - YYYY-MM-DD validation
+- **Date Logic** - start < end, minstart < maxstart
+- **Duplicate IDs** - Tasks, resources, accounts
+- **Undefined References** - Catches missing task/resource definitions
+- **Circular Dependencies** - Detects dependency loops (A→B→A)
+- **Debounced** - 500ms delay after typing stops
+- **Problems Panel** - All errors shown in VS Code
+
+#### Semantic Validation
+- Validates task references (depends, precedes, follows)
+- Validates resource references (allocate, responsible)
+- Validates account references (charge, revenue)
+- Detects multi-level circular dependencies
+- Smart error messages with task IDs and paths
+
+### Document Formatting (v0.3.3)
+- **Auto-Format** - Ctrl+Shift+I or Shift+Alt+F
+- **Smart Indentation** - Based on brace depth
+- **Configurable** - Respects tab size and spaces/tabs settings
+- **Nested Hierarchy** - Handles complex task trees
+
+### Test Coverage
+- **121/121 tests passing** - 100% success rate (v0.5.5)
+- **Comprehensive Suite** - Unit + integration + semantic tests
+- **CI Stable** - Reliable across platforms
+- **Production Ready** - Stable for daily use
+
 ## 📝 Snippet System
 
 ### Snippet Categories

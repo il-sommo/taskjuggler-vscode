@@ -358,7 +358,63 @@ ___________________________________________
 
 ## Automated Testing
 
-Future: Add automated tests using VS Code Extension Testing API.
+The extension includes a comprehensive automated test suite using the VS Code Extension Testing API.
+
+### Test Statistics
+
+**Current Test Coverage:** 121/121 tests passing (100%) ✅
+
+**Test Breakdown:**
+- v0.5.5 - Comprehensive Improvements: 17 tests
+- v0.5.1 - Quick Fixes: 9 tests
+- Signature Help Provider: 12 tests
+- Semantic Validator: 10 tests
+- TaskJuggler Parser: 12 tests
+- Navigation Providers: 10 tests
+- Interactive Snippets: 15 tests
+- Integration Tests: 11 tests
+- Formatter: 2 tests
+- Date Logic Validator: 9 tests
+- Completion Provider: 11 tests
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Compile and run tests
+npm run compile && npm test
+
+# Watch mode (for development)
+npm run watch
+```
+
+### Test Framework
+
+- **Framework:** Mocha
+- **VS Code API:** @vscode/test-electron
+- **TypeScript:** Full type checking
+- **CI/CD:** Automated testing on commits
+
+### Test Files
+
+Located in `src/test/suite/`:
+- `v0.5.5.test.ts` - Comprehensive improvements tests
+- `v0.5.1.test.ts` - Account & nested task tests
+- `signatureHelpProvider.test.ts` - Parameter hints tests
+- `semanticValidator.test.ts` - Semantic validation tests
+- `parser.test.ts` - Parser tests
+- `navigationProviders.test.ts` - Navigation features tests
+- `interactiveSnippets.test.ts` - Interactive snippet tests
+- `integration.test.ts` - Full integration tests
+- `formatter.test.ts` - Formatting tests
+- `dateLogicValidator.test.ts` - Date logic tests
+- `completionProvider.test.ts` - Completion tests
+
+### Contributing Tests
+
+When adding new features, include tests in the appropriate suite. Maintain 100% test pass rate.
 
 ## Reporting Issues
 
@@ -375,5 +431,6 @@ All tests should PASS for release readiness.
 
 ---
 
-**Last Updated**: 2024-01-28
-**Extension Version**: 1.0.0
+**Last Updated**: 2026-01-31
+**Extension Version**: 0.5.5
+**Test Coverage**: 121/121 tests passing (100%)
