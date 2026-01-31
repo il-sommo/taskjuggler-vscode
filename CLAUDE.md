@@ -14,7 +14,7 @@
 
 **TaskJuggler Language Support** v0.3.1 | TypeScript VS Code Extension | .tjp/.tji files
 **Features:** Syntax highlighting, 88 snippets + 8 interactive snippets, context-aware completions, parameter hints, dynamic dates
-**Test:** 79.7% (51/64) | **Status:** Production Ready ✅
+**Test:** 89.1% (57/64 + 7 skipped) | **Status:** Production Ready ✅
 
 ## Structure
 

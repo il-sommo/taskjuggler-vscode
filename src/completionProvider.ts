@@ -35,7 +35,7 @@ export class TaskJugglerCompletionProvider implements vscode.CompletionItemProvi
         const contextItems: vscode.CompletionItem[] = [];
 
         // If typing "depends", suggest existing tasks
-        if (linePrefix.match(/\bdepends\s+!?[a-zA-Z0-9_]*$/)) {
+        if (linePrefix.match(/\bdepends\s*!?[a-zA-Z0-9_]*$/)) {
             symbols.tasks.forEach(task => {
                 const item = new vscode.CompletionItem(task.id, vscode.CompletionItemKind.Reference);
                 item.detail = `Task: ${task.name}`;
@@ -46,7 +46,7 @@ export class TaskJugglerCompletionProvider implements vscode.CompletionItemProvi
         }
 
         // If typing "allocate", suggest existing resources
-        if (linePrefix.match(/\ballocate\s+[a-zA-Z0-9_,\s]*$/)) {
+        if (linePrefix.match(/\ballocate\s*[a-zA-Z0-9_,\s]*$/)) {
             symbols.resources.forEach(resource => {
                 const item = new vscode.CompletionItem(resource.id, vscode.CompletionItemKind.Reference);
                 item.detail = `Resource: ${resource.name}`;
@@ -117,7 +117,7 @@ export class TaskJugglerCompletionProvider implements vscode.CompletionItemProvi
     }
 
     private isDateContext(linePrefix: string): boolean {
-        return /\b(start|end|minstart|maxstart|minend|maxend|now)\s+[^\s]*$/i.test(linePrefix);
+        return /\b(start|end|minstart|maxstart|minend|maxend|now)\s*[^\s]*$/i.test(linePrefix);
     }
 
     private getDateCompletions(): vscode.CompletionItem[] {
