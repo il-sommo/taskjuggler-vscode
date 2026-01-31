@@ -2,6 +2,29 @@
 
 All notable changes to the TaskJuggler extension.
 
+## [0.3.1] - 2026-01-31
+
+### Added
+
+**4 New Interactive Snippets**
+- `Insert Allocate (Interactive)` - Resource allocation with % limits or specific effort
+- `Insert Dependencies (Interactive)` - Task dependencies with gap duration support
+- `Insert Vacation (Interactive)` - Vacation periods with date range or duration
+- `Insert Shift (Interactive)` - Work shifts with custom hours or predefined templates
+
+**Test Coverage Improvements**
+- New test suite: `interactiveSnippets.test.ts` (15 tests)
+- Total tests: 64 (up from 49)
+- Coverage: 79.7% (up from 73.5%)
+- All interactive snippet tests passing
+
+### Changed
+
+- Total interactive commands: 8 (4 structure + 4 attributes)
+- Enhanced helper methods: `getTodayDate()`, `addDays()`
+
+---
+
 ## [0.3.0] - 2026-01-31
 
 ### 🎉 Major Release: Context-Aware Intelligence
