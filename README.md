@@ -52,6 +52,16 @@ make install
 
 All snippets use **dynamic dates** - always current, never outdated.
 
+### Interactive Snippets (NEW!)
+
+Use Command Palette (Ctrl+Shift+P) → "TaskJuggler: Insert..." for guided input:
+- **Insert Project (Interactive)** - Prompts for ID, name, dates, duration
+- **Insert Task (Interactive)** - Choose task type, prompts for details
+- **Insert Resource (Interactive)** - Guided resource creation
+- **Insert Report (Interactive)** - Choose report type and format
+
+### Traditional Snippets
+
 **Project & Structure**:
 - `project` - Complete project with resources, tasks, reports
 - `task` - Task definition

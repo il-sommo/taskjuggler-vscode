@@ -4,6 +4,7 @@ import { TaskJugglerCompletionProvider } from './completionProvider';
 import { TaskJugglerDefinitionProvider } from './definitionProvider';
 import { TaskJugglerSignatureHelpProvider } from './signatureHelpProvider';
 import { registerQuickStart } from './quickStart';
+import { InteractiveSnippets } from './interactiveSnippets';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('TaskJuggler extension activated');
@@ -48,6 +49,56 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register Quick Start for empty files
     registerQuickStart(context);
+
+    // Register Interactive Snippets
+    const interactiveSnippets = new InteractiveSnippets();
+
+    const insertProjectCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertProject',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertProject(editor);
+            }
+        }
+    );
+
+    const insertTaskCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertTask',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertTask(editor);
+            }
+        }
+    );
+
+    const insertResourceCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertResource',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertResource(editor);
+            }
+        }
+    );
+
+    const insertReportCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertReport',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertReport(editor);
+            }
+        }
+    );
+
+    context.subscriptions.push(
+        insertProjectCommand,
+        insertTaskCommand,
+        insertResourceCommand,
+        insertReportCommand
+    );
 
     vscode.window.showInformationMessage('TaskJuggler: Context-aware features enabled!');
 }

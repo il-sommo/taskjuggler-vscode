@@ -53,6 +53,28 @@
         "language": "taskjuggler",
         "path": "./snippets/taskjuggler.json"
       }
+    ],
+    "commands": [
+      {
+        "command": "taskjuggler.insertProject",
+        "title": "Insert Project (Interactive)",
+        "category": "TaskJuggler"
+      },
+      {
+        "command": "taskjuggler.insertTask",
+        "title": "Insert Task (Interactive)",
+        "category": "TaskJuggler"
+      },
+      {
+        "command": "taskjuggler.insertResource",
+        "title": "Insert Resource (Interactive)",
+        "category": "TaskJuggler"
+      },
+      {
+        "command": "taskjuggler.insertReport",
+        "title": "Insert Report (Interactive)",
+        "category": "TaskJuggler"
+      }
     ]
   },
   "license": "MIT",

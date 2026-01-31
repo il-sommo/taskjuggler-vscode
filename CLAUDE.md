@@ -13,7 +13,7 @@
 ## Project
 
 **TaskJuggler Language Support** v0.3.0 | TypeScript VS Code Extension | .tjp/.tji files
-**Features:** Syntax highlighting, 88 snippets, context-aware completions, parameter hints, dynamic dates
+**Features:** Syntax highlighting, 88 snippets + interactive snippets, context-aware completions, parameter hints, dynamic dates
 **Test:** 73.5% (36/49) | **Status:** Production Ready ✅
 
 ## Structure
@@ -46,6 +46,7 @@ make check-clean                 # Verify root clean
 
 **Keyword:** taskjugglerData.ts → KeywordInfo + add to attribute list
 **Snippet:** snippets/taskjuggler.json → use `$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE`
+**Interactive Snippet:** interactiveSnippets.ts → add method + register command in extension.ts + package.json
 **Provider:** src/newProvider.ts → implement interface → register in extension.ts
 
 ## Roadmap
