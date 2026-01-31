@@ -5,6 +5,7 @@ import { TaskJugglerDefinitionProvider } from './definitionProvider';
 import { TaskJugglerSignatureHelpProvider } from './signatureHelpProvider';
 import { registerQuickStart } from './quickStart';
 import { InteractiveSnippets } from './interactiveSnippets';
+import { DiagnosticsProvider } from './diagnosticsProvider';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('TaskJuggler extension activated');
@@ -49,6 +50,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register Quick Start for empty files
     registerQuickStart(context);
+
+    // Register Diagnostics Provider
+    const diagnosticsProvider = new DiagnosticsProvider();
+    diagnosticsProvider.register(context);
 
     // Register Interactive Snippets
     const interactiveSnippets = new InteractiveSnippets();

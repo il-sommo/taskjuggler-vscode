@@ -12,8 +12,8 @@
 
 ## Project
 
-**TaskJuggler Language Support** v0.3.1 | TypeScript VS Code Extension | .tjp/.tji files
-**Features:** Syntax highlighting, 88 snippets + 8 interactive snippets, context-aware completions, parameter hints, dynamic dates
+**TaskJuggler Language Support** v0.3.2 | TypeScript VS Code Extension | .tjp/.tji files
+**Features:** Syntax highlighting, 88 snippets + 8 interactive snippets, context-aware completions, parameter hints, dynamic dates, real-time validation
 **Test:** 89.1% (57/64 + 7 skipped) | **Status:** Production Ready ✅
 
 ## Structure
@@ -21,6 +21,8 @@
 ```
 src/extension.ts taskjugglerParser.ts completionProvider.ts signatureHelpProvider.ts
     hoverProvider.ts definitionProvider.ts quickStart.ts taskjugglerData.ts
+    diagnosticsProvider.ts interactiveSnippets.ts
+    validators/dateValidator.ts syntaxValidator.ts
 snippets/taskjuggler.json  syntaxes/taskjuggler.tmLanguage.json
 test/suite/  docs/  test-project/
 ```
@@ -60,4 +62,4 @@ v0.4.0: Validation/diagnostics | v0.5.0: Symbols/rename/references | v0.6.0: Cod
 
 ---
 
-**v0.3.1** | 2026-01-31
+**v0.3.2** | 2026-01-31

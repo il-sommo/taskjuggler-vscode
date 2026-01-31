@@ -2,6 +2,54 @@
 
 All notable changes to the TaskJuggler extension.
 
+## [0.3.2] - 2026-01-31
+
+### 🎉 Added - Basic Validation (Preview of v0.4.0)
+
+**Real-time Diagnostics**
+- Date format validation (YYYY-MM-DD required)
+- Duplicate ID detection (tasks, resources, accounts)
+- Syntax validation (unclosed/unmatched braces)
+- Problems panel integration
+
+**New Files**
+- `src/diagnosticsProvider.ts` - Main diagnostics orchestrator
+- `src/validators/dateValidator.ts` - Date format & logic validation
+- `src/validators/syntaxValidator.ts` - Syntax & duplicate ID checks
+
+### Features
+
+**Date Validation**
+- Validates YYYY-MM-DD format
+- Checks date values are valid (e.g., month 01-12, valid days)
+- Skips macro references (${now}, etc.)
+- Real-time error highlighting
+
+**Duplicate ID Detection**
+- Detects duplicate task IDs
+- Detects duplicate resource IDs
+- Detects duplicate account IDs
+- Shows both occurrences with line numbers
+
+**Syntax Checking**
+- Unclosed braces detection
+- Unmatched closing braces
+- Clear error messages with location
+
+**Performance**
+- Debounced validation (500ms after typing stops)
+- Validates on save
+- Validates on document open
+- Clears diagnostics on document close
+
+### Changed
+
+- Extension now provides real-time feedback
+- Problems panel shows all validation errors
+- Error markers in editor gutter
+
+---
+
 ## [0.3.1] - 2026-01-31
 
 ### Added
