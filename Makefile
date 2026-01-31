@@ -1,5 +1,20 @@
 # Makefile for TaskJuggler VS Code Extension
 # Provides build, install, test, and deployment targets
+#
+# Prerequisites:
+#   - Node.js (v14 or higher): https://nodejs.org/
+#   - npm (comes with Node.js)
+#
+# Quick Start:
+#   make deps     # Install all dependencies
+#   make package  # Create VSIX package
+#   make install  # Install extension to VS Code
+#   make test     # Run all tests
+#
+# Common Issues:
+#   - "tsc: command not found" → Run: make deps
+#   - "vsce: command not found" → Run: make deps
+#   - "npm: command not found" → Install Node.js first
 
 # Extension metadata
 EXTENSION_NAME = taskjuggler-syntax
@@ -37,15 +52,39 @@ help: ## Display this help message
 
 ##@ Development
 
-deps: ## Install development dependencies (vsce)
-	@echo "$(GREEN)Installing dependencies...$(NC)"
+check-prereqs: ## Check system prerequisites (Node.js, npm)
+	@echo "$(GREEN)Checking system prerequisites...$(NC)"
+	@if ! command -v node &> /dev/null; then \
+		echo "$(RED)✗ Node.js not found$(NC)"; \
+		echo "$(YELLOW)Install Node.js from: https://nodejs.org/$(NC)"; \
+		exit 1; \
+	fi
+	@echo "  ✓ Node.js: $$(node --version)"
+	@if ! command -v npm &> /dev/null; then \
+		echo "$(RED)✗ npm not found$(NC)"; \
+		echo "$(YELLOW)npm should come with Node.js. Reinstall Node.js.$(NC)"; \
+		exit 1; \
+	fi
+	@echo "  ✓ npm: $$(npm --version)"
+	@echo "$(GREEN)✓ All system prerequisites satisfied$(NC)"
+
+deps: check-prereqs ## Install all dependencies (npm packages + vsce)
+	@echo "$(GREEN)Installing all dependencies...$(NC)"
+	@echo "$(YELLOW)Installing npm packages (TypeScript, Mocha, VS Code test tools, etc.)...$(NC)"
+	@npm install
+	@echo "$(YELLOW)Checking for vsce (VS Code packaging tool)...$(NC)"
 	@if ! command -v vsce &> /dev/null; then \
-		echo "Installing @vscode/vsce..."; \
+		echo "Installing @vscode/vsce globally..."; \
 		npm install -g @vscode/vsce; \
 	else \
-		echo "vsce is already installed"; \
+		echo "  ✓ vsce is already installed ($$(vsce --version))"; \
 	fi
-	@echo "$(GREEN)✓ Dependencies installed$(NC)"
+	@echo ""
+	@echo "$(GREEN)✓ All dependencies installed successfully!$(NC)"
+	@echo "$(YELLOW)You can now run:$(NC)"
+	@echo "  make package  # Create VSIX package"
+	@echo "  make install  # Install to VS Code"
+	@echo "  make test     # Run tests"
 
 check: ## Check if all required files are present
 	@echo "$(GREEN)Checking project structure...$(NC)"
@@ -55,6 +94,20 @@ check: ## Check if all required files are present
 	@test -f snippets/taskjuggler.json || (echo "$(RED)✗ snippets not found$(NC)" && exit 1)
 	@test -f README.md || (echo "$(RED)✗ README.md not found$(NC)" && exit 1)
 	@echo "$(GREEN)✓ All required files present$(NC)"
+
+check-deps: ## Check if npm dependencies are installed
+	@echo "$(GREEN)Checking npm dependencies...$(NC)"
+	@if [ ! -d "node_modules" ]; then \
+		echo "$(RED)✗ node_modules not found$(NC)"; \
+		echo "$(YELLOW)Run 'make deps' or 'npm install' to install dependencies$(NC)"; \
+		exit 1; \
+	fi
+	@if [ ! -f "node_modules/.bin/tsc" ] && ! command -v tsc &> /dev/null; then \
+		echo "$(RED)✗ TypeScript compiler (tsc) not found$(NC)"; \
+		echo "$(YELLOW)Run 'make deps' or 'npm install' to install dependencies$(NC)"; \
+		exit 1; \
+	fi
+	@echo "$(GREEN)✓ All dependencies installed (node_modules + TypeScript)$(NC)"
 
 check-clean: ## Verify root directory is clean (only essential files)
 	@echo "$(GREEN)Checking root directory cleanliness...$(NC)"
@@ -92,7 +145,7 @@ validate: check ## Validate JSON files
 
 ##@ Building
 
-package: check ## Create VSIX package (requires vsce)
+package: check check-deps ## Create VSIX package (requires vsce and npm dependencies)
 	@echo "$(GREEN)Creating VSIX package...$(NC)"
 	@if ! command -v vsce &> /dev/null; then \
 		echo "$(RED)✗ vsce not found. Run 'make deps' first$(NC)"; \
