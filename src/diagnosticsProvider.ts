@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { DateValidator } from './validators/dateValidator';
 import { SyntaxValidator } from './validators/syntaxValidator';
+import { SemanticValidator } from './validators/semanticValidator';
 
 /**
  * Provides real-time diagnostics for TaskJuggler files
@@ -9,12 +10,14 @@ export class DiagnosticsProvider {
     private diagnosticCollection: vscode.DiagnosticCollection;
     private dateValidator: DateValidator;
     private syntaxValidator: SyntaxValidator;
+    private semanticValidator: SemanticValidator;
     private validationTimeout: NodeJS.Timeout | null = null;
 
     constructor() {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection('taskjuggler');
         this.dateValidator = new DateValidator();
         this.syntaxValidator = new SyntaxValidator();
+        this.semanticValidator = new SemanticValidator();
     }
 
     /**
@@ -94,6 +97,14 @@ export class DiagnosticsProvider {
             // 3. Duplicate ID validation
             const duplicateDiagnostics = this.syntaxValidator.validateDuplicateIds(document);
             diagnostics.push(...duplicateDiagnostics);
+
+            // 4. Semantic validation (undefined references)
+            const referenceDiagnostics = this.semanticValidator.validateReferences(document);
+            diagnostics.push(...referenceDiagnostics);
+
+            // 5. Circular dependency validation
+            const circularDiagnostics = this.semanticValidator.validateCircularDependencies(document);
+            diagnostics.push(...circularDiagnostics);
 
         } catch (error) {
             console.error('Error during validation:', error);

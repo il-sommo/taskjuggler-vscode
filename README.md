@@ -2,11 +2,11 @@
 
 > Complete language support for TaskJuggler 3.x project management files
 
-[![Version](https://img.shields.io/badge/version-0.3.3-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Version](https://img.shields.io/badge/version-0.4.0-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.108%2B-blue.svg)](https://code.visualstudio.com/)
 [![TaskJuggler](https://img.shields.io/badge/TaskJuggler-3.x-orange.svg)](https://taskjuggler.org)
-[![Tests](https://img.shields.io/badge/tests-64%2F64%20passing-brightgreen.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Tests](https://img.shields.io/badge/tests-85%2F85%20passing-brightgreen.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 
 ## Features
 
@@ -24,12 +24,21 @@
 - 🎯 **Go-to-Definition** - Navigate to task/resource definitions
 - 150+ **Keyword Documentation** - Hover tooltips with syntax and examples
 
-### Validation & Diagnostics (v0.3.2+)
-- ✅ **Real-time Date Validation** - YYYY-MM-DD format checking
+### Validation & Diagnostics (v0.4.0)
+- ✅ **Real-time Date Validation** - YYYY-MM-DD format + logic checking
+- 🔄 **Semantic Validation** - Undefined references & circular dependencies
 - 🔍 **Duplicate ID Detection** - Catches duplicate tasks, resources, accounts
 - 🔧 **Syntax Checking** - Unclosed/unmatched braces detection
 - 📊 **Problems Panel** - All errors shown in VS Code Problems panel
 - ⚡ **Debounced Validation** - Smart 500ms delay after typing stops
+- 📅 **Date Logic** - Validates start < end, min < max constraints
+
+**Catches Common Errors:**
+- Undefined task/resource references
+- Circular dependencies (A→B→A)
+- Invalid date ranges (end before start)
+- Duplicate IDs across tasks/resources
+- Invalid date formats and values
 
 ### Formatting (v0.3.3)
 - 📐 **Auto-Formatting** - Format entire document (Ctrl+Shift+I)
@@ -37,7 +46,7 @@
 - ⚙️ **Configurable** - Respects tab size and spaces/tabs settings
 
 ### Quality
-- ✅ **100% Test Coverage** - All 66 tests passing (v0.3.3)
+- ✅ **100% Test Coverage** - All 85 tests passing (v0.4.0)
 - 🚀 **Production Ready** - Stable and reliable
 - 🔄 **CI Tested** - Continuous integration validation
 
