@@ -2,7 +2,7 @@
 
 > Complete language support for TaskJuggler 3.x project management files
 
-[![Version](https://img.shields.io/badge/version-0.5.6-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Version](https://img.shields.io/badge/version-0.5.7-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.108%2B-blue.svg)](https://code.visualstudio.com/)
 [![TaskJuggler](https://img.shields.io/badge/TaskJuggler-3.x-orange.svg)](https://taskjuggler.org)

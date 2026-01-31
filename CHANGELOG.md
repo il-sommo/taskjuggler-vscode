@@ -2,6 +2,64 @@
 
 All notable changes to the TaskJuggler extension.
 
+## [0.5.7] - 2026-01-31
+
+### 🔄 Feature Release - Recursive Make System
+
+**Recursive Make Targets (NEW!)**
+- ✅ **Automatic Propagation** - Targets propagate to subdirectories with Makefiles
+- 🎯 **Generic Pattern** - `make subdirs-<target>` runs any target in subdirs
+- 🧹 **Smart Clean** - `make clean` cleans root + subdirectories
+- 📦 **Preserved Dependencies** - node_modules NOT removed by default clean
+
+**New Targets:**
+- `subdirs-%` - Generic pattern to run any target in subdirectories
+- `subdirs-all` - Run `make all` in all subdirectories
+- `subdirs-clean` - Run `make clean` in all subdirectories
+- `subdirs-compile` - Compile test-project via recursive make
+- `subdirs-view` - View test-project reports
+- `subdirs-help` - Show help from all subdirectories
+- `clean-deps` - Remove node_modules (separate from clean)
+
+**Enhanced Targets:**
+- `clean` - Now runs `subdirs-clean` automatically + preserves node_modules
+- `compile-test` - Uses recursive make system
+- `view-reports` - Delegates to test-project Makefile
+- `clean-all` - Now includes clean-deps
+
+**Workflow Example:**
+```bash
+# From root directory:
+make subdirs-compile    # Compiles test-project
+make clean              # Cleans root + test-project (keeps node_modules)
+make clean-deps         # Removes node_modules if needed
+make clean-all          # Full clean (everything)
+```
+
+**Benefits:**
+- ✅ Consistent target behavior across directories
+- ✅ DRY principle - logic in subdirectory Makefiles
+- ✅ Easy to add new subdirectories with Makefiles
+- ✅ Test project compilation integrated into build system
+
+**Technical Implementation:**
+- SUBDIRS variable defines recursive directories
+- Helper function `run-in-subdirs` for iteration
+- Pattern rule `subdirs-%` for generic target propagation
+- Dependencies preserved (node_modules, out/)
+
+**Test Coverage:**
+- ✅ 121/121 tests passing (100%)
+- ✅ Recursive clean tested
+- ✅ Recursive compile tested
+- ✅ Pattern rule tested
+
+**Fixed:**
+- ✅ `make clean` no longer removes node_modules (was annoying)
+- ✅ Better separation between clean and clean-all
+
+---
+
 ## [0.5.6] - 2026-01-31
 
 ### 🔧 Maintenance Release - Build System Improvements

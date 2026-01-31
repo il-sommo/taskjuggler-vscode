@@ -11,6 +11,11 @@
 #   make install  # Install extension to VS Code
 #   make test     # Run all tests
 #
+# Recursive Make:
+#   make clean              # Cleans root + subdirectories (test-project)
+#   make subdirs-compile    # Runs 'make compile' in all subdirectories
+#   make subdirs-<target>   # Runs 'make <target>' in all subdirectories
+#
 # Common Issues:
 #   - "tsc: command not found" → Run: make deps
 #   - "vsce: command not found" → Run: make deps
@@ -18,13 +23,16 @@
 
 # Extension metadata
 EXTENSION_NAME = taskjuggler-syntax
-VERSION = 0.5.6
+VERSION = 0.5.7
 VSIX_FILE = $(EXTENSION_NAME)-$(VERSION).vsix
 
 # Directories
 VSCODE_EXT_DIR = $(HOME)/.vscode/extensions/$(EXTENSION_NAME)-$(VERSION)
 BUILD_DIR = build
 DIST_DIR = dist
+
+# Subdirectories with Makefiles (for recursive make)
+SUBDIRS = test-project
 
 # VS Code paths
 VSCODE_CMD = /usr/local/bin/code
@@ -242,16 +250,50 @@ format: ## Format JSON files
 	@python3 -m json.tool snippets/taskjuggler.json > snippets/taskjuggler.json.tmp && mv snippets/taskjuggler.json.tmp snippets/taskjuggler.json
 	@echo "$(GREEN)✓ JSON files formatted$(NC)"
 
+##@ Recursive Targets
+
+# Helper function to run make in subdirectories
+define run-in-subdirs
+	@for dir in $(SUBDIRS); do \
+		if [ -f $$dir/Makefile ]; then \
+			echo "$(YELLOW)Running 'make $(1)' in $$dir...$(NC)"; \
+			$(MAKE) -C $$dir $(1) || exit 1; \
+		fi; \
+	done
+endef
+
+subdirs-%: ## Run any target in all subdirectories (e.g., make subdirs-compile)
+	$(call run-in-subdirs,$*)
+
+subdirs-all: ## Run 'make all' in all subdirectories
+	$(call run-in-subdirs,all)
+
+subdirs-clean: ## Run 'make clean' in all subdirectories
+	$(call run-in-subdirs,clean)
+
+subdirs-help: ## Run 'make help' in all subdirectories
+	$(call run-in-subdirs,help)
+
+subdirs-compile: ## Run 'make compile' in all subdirectories (test-project)
+	$(call run-in-subdirs,compile)
+
+subdirs-view: ## Run 'make view' in all subdirectories (test-project)
+	$(call run-in-subdirs,view)
+
 ##@ Cleanup
 
-clean: ## Remove generated files (VSIX, build artifacts)
+clean: subdirs-clean ## Remove generated files (VSIX, build artifacts) + subdirs
 	@echo "$(GREEN)Cleaning build artifacts...$(NC)"
 	@rm -f *.vsix
 	@rm -rf $(BUILD_DIR)
 	@rm -rf $(DIST_DIR)
-	@rm -rf node_modules
 	@rm -f test-snippets.tjp
-	@echo "$(GREEN)✓ Clean complete$(NC)"
+	@echo "$(GREEN)✓ Clean complete (node_modules preserved)$(NC)"
+
+clean-deps: ## Remove node_modules (requires 'make deps' to reinstall)
+	@echo "$(GREEN)Removing node_modules...$(NC)"
+	@rm -rf node_modules
+	@echo "$(YELLOW)Run 'make deps' to reinstall dependencies$(NC)"
 
 clean-test: ## Clean test project reports
 	@echo "$(GREEN)Cleaning test project reports...$(NC)"
@@ -261,7 +303,7 @@ clean-test: ## Clean test project reports
 	@rm -f test-project/*.csv
 	@echo "$(GREEN)✓ Test reports cleaned$(NC)"
 
-clean-all: clean clean-test uninstall ## Remove all generated files and uninstall
+clean-all: clean clean-deps clean-test uninstall ## Remove all generated files and uninstall
 
 ##@ Publishing
 
@@ -323,28 +365,10 @@ info: ## Show extension information
 
 ##@ Test Project
 
-compile-test: ## Compile test project with tj3
-	@echo "$(GREEN)Compiling test project...$(NC)"
-	@if ! command -v tj3 &> /dev/null; then \
-		echo "$(RED)✗ tj3 not found. Please install TaskJuggler:$(NC)"; \
-		echo "  macOS: brew install taskjuggler"; \
-		echo "  or: gem install taskjuggler"; \
-		exit 1; \
-	fi
-	@cd test-project && tj3 project.tjp
-	@echo "$(GREEN)✓ Test project compiled successfully$(NC)"
-	@echo "$(YELLOW)  Reports generated in test-project/reports/$(NC)"
+compile-test: subdirs-compile ## Compile test project with tj3 (via recursive make)
 
 view-reports: compile-test ## Compile and view reports in browser
-	@echo "$(GREEN)Opening reports in browser...$(NC)"
-	@if [ -f "test-project/reports/Overview.html" ]; then \
-		open test-project/reports/Overview.html 2>/dev/null || \
-		xdg-open test-project/reports/Overview.html 2>/dev/null || \
-		start test-project/reports/Overview.html 2>/dev/null || \
-		echo "$(YELLOW)Please open test-project/reports/Overview.html manually$(NC)"; \
-	else \
-		echo "$(RED)✗ Reports not found. Compilation may have failed.$(NC)"; \
-	fi
+	@$(MAKE) -C test-project view
 
 
 ##@ Aliases
