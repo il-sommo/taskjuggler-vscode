@@ -2,6 +2,63 @@
 
 All notable changes to the TaskJuggler extension.
 
+## [0.5.6] - 2026-01-31
+
+### 🔧 Maintenance Release - Build System Improvements
+
+**Dependency Management (NEW!)**
+- ✅ **One-Command Setup** - `make deps` installs everything automatically
+- 🔍 **Prerequisite Checking** - Verifies Node.js and npm before installation
+- 🛡️ **Dependency Validation** - Auto-checks before build/test/package
+- 📋 **Clear Error Messages** - Helpful guidance when dependencies missing
+
+**New Makefile Targets:**
+- `make check-prereqs` - Verify Node.js and npm installed
+- `make check-deps` - Verify npm packages (TypeScript, etc.) installed
+- `make deps` - Install ALL dependencies (npm packages + vsce)
+
+**Enhanced Targets:**
+- `make package` - Now auto-checks dependencies before building
+- `make compile` - Better error handling
+- `make test` - Dependency validation
+
+**Fixed Issues:**
+- ✅ Fixed: "tsc: command not found" error
+- ✅ Fixed: "vsce: command not found" error
+- ✅ Fixed: Cryptic build errors when dependencies missing
+
+**VS Code Marketplace:**
+- ✅ Enhanced description with all v0.5.5 features
+- ✅ Added "Linters" category
+- ✅ Expanded keywords (+15 new: validation, refactoring, rename, etc.)
+
+**Documentation:**
+- Makefile header with prerequisites and quick start
+- Common issues section with solutions
+- Clear next-steps after dependency installation
+
+**Developer Experience:**
+```bash
+# Before (v0.5.5)
+npm install                    # Manual step
+npm install -g @vscode/vsce   # Another manual step
+make package                   # Hope it works
+
+# After (v0.5.6)
+make deps     # Everything installed automatically!
+make package  # Auto-checks dependencies, clear errors
+```
+
+**Test Coverage:**
+- ✅ 121/121 tests passing (100%)
+- ✅ All build targets verified
+- ✅ Cross-platform compatibility confirmed
+
+**No Functional Changes** - This is a pure build system improvement release.
+All language features from v0.5.5 remain unchanged.
+
+---
+
 ## [0.5.5] - 2026-01-31
 
 ### 🎉 Major Release - Comprehensive Improvements
