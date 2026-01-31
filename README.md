@@ -104,6 +104,7 @@ resource john "John Doe" {
 - **[Best Practices](docs/BEST-PRACTICES.md)** - TaskJuggler tips & patterns
 - **[Testing Guide](docs/TESTING.md)** - Run tests and contribute
 - **[Contributing](docs/CONTRIBUTING.md)** - Contribution guidelines
+- **[Roadmap](docs/ROADMAP.md)** - Development roadmap to v1.0.0
 
 ## Example Project
 

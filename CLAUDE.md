@@ -51,6 +51,7 @@ make check-clean                 # Verify root clean
 ## Roadmap
 
 v0.4.0: Validation/diagnostics | v0.5.0: Symbols/rename/references | v0.6.0: Code actions/format | v1.0.0: tj3 integration/preview
+→ Full details: [docs/ROADMAP.md](docs/ROADMAP.md)
 
 ## Release
 
