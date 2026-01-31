@@ -2,11 +2,11 @@
 
 > Complete language support for TaskJuggler 3.x project management files
 
-[![Version](https://img.shields.io/badge/version-0.4.0-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Version](https://img.shields.io/badge/version-0.5.0-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.108%2B-blue.svg)](https://code.visualstudio.com/)
 [![TaskJuggler](https://img.shields.io/badge/TaskJuggler-3.x-orange.svg)](https://taskjuggler.org)
-[![Tests](https://img.shields.io/badge/tests-85%2F85%20passing-brightgreen.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Tests](https://img.shields.io/badge/tests-95%2F95%20passing-brightgreen.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 
 ## Features
 
@@ -45,8 +45,22 @@
 - 🔧 **Smart Indentation** - Automatic nesting based on braces
 - ⚙️ **Configurable** - Respects tab size and spaces/tabs settings
 
+### Navigation & Refactoring (v0.5.0)
+- 📑 **Outline View** - See all tasks/resources in sidebar
+- 🔍 **Find References (Shift+F12)** - Find where symbols are used
+- ✏️ **Rename (F2)** - Safely rename tasks/resources everywhere
+- 🔎 **Go to Symbol (Ctrl+Shift+O)** - Quick navigation
+- 🌐 **Workspace Search (Ctrl+T)** - Search across all files
+- 🍞 **Breadcrumbs** - Navigate document structure
+
+**Navigation:**
+- Click on task in depends → jump to definition
+- F2 on task → rename with validation
+- Shift+F12 → see all usages
+- Outline view shows full structure
+
 ### Quality
-- ✅ **100% Test Coverage** - All 85 tests passing (v0.4.0)
+- ✅ **100% Test Coverage** - All 95 tests passing (v0.5.0)
 - 🚀 **Production Ready** - Stable and reliable
 - 🔄 **CI Tested** - Continuous integration validation
 

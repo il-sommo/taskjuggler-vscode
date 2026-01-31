@@ -3,7 +3,7 @@
 
 # Extension metadata
 EXTENSION_NAME = taskjuggler-syntax
-VERSION = 0.4.0
+VERSION = 0.5.0
 VSIX_FILE = $(EXTENSION_NAME)-$(VERSION).vsix
 
 # Directories

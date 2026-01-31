@@ -2,6 +2,73 @@
 
 All notable changes to the TaskJuggler extension.
 
+## [0.5.0] - 2026-01-31
+
+### 🎉 Major Release - Navigation & Refactoring
+
+**Navigation Features (NEW!)**
+- 📑 **Document Symbols (Outline View)** - See all tasks/resources in sidebar
+- 🔍 **Find All References (Shift+F12)** - Find where tasks/resources are used
+- 🔎 **Go to Symbol (Ctrl+Shift+O)** - Quick jump to any task/resource
+- 🌐 **Workspace Symbols (Ctrl+T)** - Search across all .tjp files
+
+**Refactoring Features (NEW!)**
+- ✏️ **Rename Refactoring (F2)** - Rename task/resource everywhere
+- 🔄 **Smart Rename** - Updates all `depends` and `allocate` references
+- ✅ **Validation** - Prevents invalid names and duplicates
+
+**Code Navigation**
+- Outline view shows tasks, resources, scenarios
+- Breadcrumb navigation in editor
+- Click references to jump to definition
+- Hover on reference shows definition preview
+
+**New Providers**
+- `DocumentSymbolProvider` - Outline & breadcrumbs
+- `ReferenceProvider` - Find all references
+- `RenameProvider` - Safe refactoring
+- `WorkspaceSymbolProvider` - Cross-file search
+
+**Usage Examples:**
+
+```taskjuggler
+# Outline shows:
+# - Tasks
+#   - dev
+#   - test
+# - Resources
+#   - john
+
+task dev "Development" {}
+resource john "John Doe" {}
+
+task test "Testing" {
+    depends !dev      # Shift+F12 on dev → shows this reference
+    allocate john     # F2 on john → rename everywhere
+}
+```
+
+**Features:**
+- F2 on task/resource → rename with validation
+- Shift+F12 → find all references
+- Ctrl+Shift+O → quick symbol navigation
+- Ctrl+T → search across files
+- Outline view automatically populated
+
+**Test Coverage**
+- **95/95 tests passing (100%)** ✅
+- +10 new navigation tests
+- All providers fully tested
+
+**New Files**
+- `src/documentSymbolProvider.ts` (125 lines)
+- `src/referenceProvider.ts` (115 lines)
+- `src/renameProvider.ts` (155 lines)
+- `src/workspaceSymbolProvider.ts` (95 lines)
+- `src/test/suite/navigationProviders.test.ts` (10 tests)
+
+---
+
 ## [0.4.0] - 2026-01-31
 
 ### 🎉 Major Release - Complete Validation & Diagnostics
@@ -345,13 +412,13 @@ task dev "Development" {
 - ✅ Date logic validation
 - ✅ Problems panel integration
 
-### [0.5.0] - Navigation & Refactoring (Next)
-- Document symbols (outline view)
-- Rename refactoring
-- Find all references
-- Workspace symbol search
+### [0.5.0] - Navigation & Refactoring ✅ COMPLETED
+- ✅ Document symbols (outline view)
+- ✅ Rename refactoring
+- ✅ Find all references
+- ✅ Workspace symbol search
 
-### [0.6.0] - Code Actions (Planned)
+### [0.6.0] - Code Actions (Next)
 - Quick fixes for common errors
 - Code formatting
 - Auto-import

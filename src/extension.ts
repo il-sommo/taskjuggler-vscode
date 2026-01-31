@@ -7,6 +7,10 @@ import { registerQuickStart } from './quickStart';
 import { InteractiveSnippets } from './interactiveSnippets';
 import { DiagnosticsProvider } from './diagnosticsProvider';
 import { TaskJugglerFormattingProvider } from './formattingProvider';
+import { TaskJugglerDocumentSymbolProvider } from './documentSymbolProvider';
+import { TaskJugglerReferenceProvider } from './referenceProvider';
+import { TaskJugglerRenameProvider } from './renameProvider';
+import { TaskJugglerWorkspaceSymbolProvider } from './workspaceSymbolProvider';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('TaskJuggler extension activated');
@@ -48,12 +52,39 @@ export function activate(context: vscode.ExtensionContext) {
         new TaskJugglerFormattingProvider()
     );
 
+    // Register Document Symbol Provider (Outline)
+    const documentSymbolProvider = vscode.languages.registerDocumentSymbolProvider(
+        selector,
+        new TaskJugglerDocumentSymbolProvider()
+    );
+
+    // Register Reference Provider (Find All References)
+    const referenceProvider = vscode.languages.registerReferenceProvider(
+        selector,
+        new TaskJugglerReferenceProvider()
+    );
+
+    // Register Rename Provider
+    const renameProvider = vscode.languages.registerRenameProvider(
+        selector,
+        new TaskJugglerRenameProvider()
+    );
+
+    // Register Workspace Symbol Provider (Ctrl+T)
+    const workspaceSymbolProvider = vscode.languages.registerWorkspaceSymbolProvider(
+        new TaskJugglerWorkspaceSymbolProvider()
+    );
+
     context.subscriptions.push(
         hoverProvider,
         completionProvider,
         definitionProvider,
         signatureHelpProvider,
-        formattingProvider
+        formattingProvider,
+        documentSymbolProvider,
+        referenceProvider,
+        renameProvider,
+        workspaceSymbolProvider
     );
 
     // Register Quick Start for empty files
