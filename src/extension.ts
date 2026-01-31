@@ -93,11 +93,55 @@ export function activate(context: vscode.ExtensionContext) {
         }
     );
 
+    const insertAllocateCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertAllocate',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertAllocate(editor);
+            }
+        }
+    );
+
+    const insertDependenciesCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertDependencies',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertDependencies(editor);
+            }
+        }
+    );
+
+    const insertVacationCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertVacation',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertVacation(editor);
+            }
+        }
+    );
+
+    const insertShiftCommand = vscode.commands.registerCommand(
+        'taskjuggler.insertShift',
+        () => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.languageId === 'taskjuggler') {
+                interactiveSnippets.insertShift(editor);
+            }
+        }
+    );
+
     context.subscriptions.push(
         insertProjectCommand,
         insertTaskCommand,
         insertResourceCommand,
-        insertReportCommand
+        insertReportCommand,
+        insertAllocateCommand,
+        insertDependenciesCommand,
+        insertVacationCommand,
+        insertShiftCommand
     );
 
     vscode.window.showInformationMessage('TaskJuggler: Context-aware features enabled!');

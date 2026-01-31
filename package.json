@@ -74,6 +74,26 @@
         "command": "taskjuggler.insertReport",
         "title": "Insert Report (Interactive)",
         "category": "TaskJuggler"
+      },
+      {
+        "command": "taskjuggler.insertAllocate",
+        "title": "Insert Allocate (Interactive)",
+        "category": "TaskJuggler"
+      },
+      {
+        "command": "taskjuggler.insertDependencies",
+        "title": "Insert Dependencies (Interactive)",
+        "category": "TaskJuggler"
+      },
+      {
+        "command": "taskjuggler.insertVacation",
+        "title": "Insert Vacation (Interactive)",
+        "category": "TaskJuggler"
+      },
+      {
+        "command": "taskjuggler.insertShift",
+        "title": "Insert Shift (Interactive)",
+        "category": "TaskJuggler"
       }
     ]
   },

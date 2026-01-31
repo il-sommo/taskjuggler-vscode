@@ -55,10 +55,18 @@ All snippets use **dynamic dates** - always current, never outdated.
 ### Interactive Snippets (NEW!)
 
 Use Command Palette (Ctrl+Shift+P) → "TaskJuggler: Insert..." for guided input:
+
+**Structure:**
 - **Insert Project (Interactive)** - Prompts for ID, name, dates, duration
 - **Insert Task (Interactive)** - Choose task type, prompts for details
 - **Insert Resource (Interactive)** - Guided resource creation
 - **Insert Report (Interactive)** - Choose report type and format
+
+**Task Attributes:**
+- **Insert Allocate (Interactive)** - Assign resources with allocation % or effort
+- **Insert Dependencies (Interactive)** - Add task dependencies with gap duration
+- **Insert Vacation (Interactive)** - Define vacation periods with dates/duration
+- **Insert Shift (Interactive)** - Create work shifts with custom hours
 
 ### Traditional Snippets
 
