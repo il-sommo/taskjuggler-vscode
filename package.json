@@ -1,7 +1,7 @@
 {
   "name": "taskjuggler-syntax",
   "displayName": "TaskJuggler Language Support",
-  "description": "Complete language support for TaskJuggler: syntax highlighting, snippets, folding, IntelliSense, and context-aware features",
+  "description": "Complete TaskJuggler 3.x language server: IntelliSense, validation, navigation (outline, find references, rename), real-time diagnostics, 88 snippets, context-aware completions, and comprehensive refactoring tools",
   "version": "0.5.5",
   "buildDate": "2026-01-31",
   "publisher": "fabrizio-vacca",
@@ -15,7 +15,8 @@
   "categories": [
     "Programming Languages",
     "Snippets",
-    "Formatters"
+    "Formatters",
+    "Linters"
   ],
   "icon": "images/icon.png",
   "main": "./out/extension.js",
@@ -118,7 +119,22 @@
     "project planning",
     "resource management",
     "ai",
-    "intellisense"
+    "intellisense",
+    "validation",
+    "diagnostics",
+    "refactoring",
+    "rename",
+    "find references",
+    "outline",
+    "navigation",
+    "go to definition",
+    "language server",
+    "semantic validation",
+    "circular dependency",
+    "real-time errors",
+    "context-aware",
+    "parameter hints",
+    "signature help"
   ],
   "scripts": {
     "vscode:prepublish": "npm run compile",
