@@ -20,7 +20,19 @@ npm-debug.log*
 
 # Generated reports
 test-project/reports/
+test-project/*.html
+test-project/*.csv
+test-project/*.xml
+test-project/*.msp
+test-project/*.tjp.check
 
 # TypeScript compilation output
 out/
 *.js.map
+
+# Test and verification files
+verify_build.sh
+test-dynamic-dates.tjp
+
+# VS Code test downloads
+.vscode-test/

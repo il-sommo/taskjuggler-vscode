@@ -1,0 +1,23 @@
+project project_id "Project Name" 2024-01-01 +6m {
+    timezone "UTC"
+    timeformat "%Y-%m-%d"
+    numberformat "-" "" "," "." 1
+    currencyformat "(" ")" "," "." 0
+    currency "USD"
+    
+    scenario plan "Plan" {
+        scenario actual "Actual"
+    } 
+}
+
+project ddd "Demo Project" 2024-02-15 +3m {
+    timezone "America/New_York"
+    timeformat "%m/%d/%Y"
+    numberformat "" "" "." "," 2
+    currencyformat "" "" "." "," 2
+    currency "EUR"
+    
+    scenario baseline "Baseline" {
+        scenario revised "Revised"
+    }
+}

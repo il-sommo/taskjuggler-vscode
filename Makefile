@@ -3,7 +3,7 @@
 
 # Extension metadata
 EXTENSION_NAME = taskjuggler-syntax
-VERSION = 0.2.2
+VERSION = 0.3.0
 VSIX_FILE = $(EXTENSION_NAME)-$(VERSION).vsix
 
 # Directories
@@ -55,6 +55,32 @@ check: ## Check if all required files are present
 	@test -f snippets/taskjuggler.json || (echo "$(RED)✗ snippets not found$(NC)" && exit 1)
 	@test -f README.md || (echo "$(RED)✗ README.md not found$(NC)" && exit 1)
 	@echo "$(GREEN)✓ All required files present$(NC)"
+
+check-clean: ## Verify root directory is clean (only essential files)
+	@echo "$(GREEN)Checking root directory cleanliness...$(NC)"
+	@ALLOWED="README.md CHANGELOG.md LICENSE CLAUDE.md package.json package-lock.json tsconfig.json Makefile language-configuration.json .gitignore .vscodeignore .npmrc"; \
+	ALLOWED_DIRS="src snippets syntaxes test-project scripts images docs out node_modules .git .vscode .github"; \
+	CLEAN=true; \
+	for file in *; do \
+		if [ -f "$$file" ]; then \
+			if ! echo "$$ALLOWED" | grep -qw "$$file"; then \
+				echo "$(RED)✗ Unauthorized file in root: $$file$(NC)"; \
+				CLEAN=false; \
+			fi; \
+		elif [ -d "$$file" ]; then \
+			if ! echo "$$ALLOWED_DIRS" | grep -qw "$$file"; then \
+				echo "$(RED)✗ Unauthorized directory in root: $$file$(NC)"; \
+				CLEAN=false; \
+			fi; \
+		fi; \
+	done; \
+	if [ "$$CLEAN" = true ]; then \
+		echo "$(GREEN)✓ Root directory is clean$(NC)"; \
+	else \
+		echo "$(RED)✗ Root directory contains unauthorized files$(NC)"; \
+		echo "$(YELLOW)Run 'make clean' to remove build artifacts$(NC)"; \
+		exit 1; \
+	fi
 
 validate: check ## Validate JSON files
 	@echo "$(GREEN)Validating JSON files...$(NC)"

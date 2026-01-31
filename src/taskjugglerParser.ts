@@ -14,6 +14,14 @@ export interface ParsedDocument {
     scenarios: Symbol[];
 }
 
+export interface ParserContext {
+    currentBlock: 'project' | 'task' | 'resource' | 'account' | 'report' | 'none';
+    blockId?: string;
+    blockRange: vscode.Range;
+    parentBlocks: string[]; // nesting hierarchy
+    usedAttributes: Set<string>; // attributes already defined in current block
+}
+
 export class TaskJugglerParser {
     /**
      * Parse a TaskJuggler document and extract all defined symbols
@@ -109,5 +117,99 @@ export class TaskJugglerParser {
         }
 
         return undefined;
+    }
+
+    /**
+     * Get the context at a specific position in the document
+     * Determines what block type we're in and what attributes have been used
+     */
+    public getContextAtPosition(document: vscode.TextDocument, position: vscode.Position): ParserContext {
+        const context: ParserContext = {
+            currentBlock: 'none',
+            blockRange: new vscode.Range(0, 0, 0, 0),
+            parentBlocks: [],
+            usedAttributes: new Set<string>()
+        };
+
+        // Track brace depth and block types
+        const blockStack: Array<{ type: string; id?: string; startLine: number }> = [];
+
+        // Patterns for block detection
+        const projectPattern = /^\s*project\s+([a-zA-Z_][a-zA-Z0-9_]*)/;
+        const taskPattern = /^\s*task\s+([a-zA-Z_][a-zA-Z0-9_]*)/;
+        const resourcePattern = /^\s*resource\s+([a-zA-Z_][a-zA-Z0-9_]*)/;
+        const accountPattern = /^\s*account\s+([a-zA-Z_][a-zA-Z0-9_]*)/;
+        const reportPattern = /^\s*(?:taskreport|resourcereport|textreport|tracereport|statussheetreport|nikureport)\s+([a-zA-Z_][a-zA-Z0-9_]*)/;
+
+        // Parse line by line up to the cursor position
+        for (let i = 0; i <= position.line; i++) {
+            const line = document.lineAt(i).text;
+            const trimmed = line.trim();
+
+            // Skip comments
+            if (trimmed.startsWith('#') || trimmed.startsWith('//')) {
+                continue;
+            }
+
+            // Check for block starts
+            let match = line.match(projectPattern);
+            if (match && line.includes('{')) {
+                blockStack.push({ type: 'project', id: match[1], startLine: i });
+                continue;
+            }
+
+            match = line.match(taskPattern);
+            if (match && line.includes('{')) {
+                blockStack.push({ type: 'task', id: match[1], startLine: i });
+                continue;
+            }
+
+            match = line.match(resourcePattern);
+            if (match && line.includes('{')) {
+                blockStack.push({ type: 'resource', id: match[1], startLine: i });
+                continue;
+            }
+
+            match = line.match(accountPattern);
+            if (match && line.includes('{')) {
+                blockStack.push({ type: 'account', id: match[1], startLine: i });
+                continue;
+            }
+
+            match = line.match(reportPattern);
+            if (match && line.includes('{')) {
+                blockStack.push({ type: 'report', id: match[1], startLine: i });
+                continue;
+            }
+
+            // Check for block ends
+            if (trimmed === '}' && blockStack.length > 0) {
+                blockStack.pop();
+            }
+        }
+
+        // Determine current block context
+        if (blockStack.length > 0) {
+            const currentBlock = blockStack[blockStack.length - 1];
+            context.currentBlock = currentBlock.type as any;
+            context.blockId = currentBlock.id;
+            context.blockRange = new vscode.Range(
+                currentBlock.startLine, 0,
+                position.line, 999
+            );
+            context.parentBlocks = blockStack.map(b => b.type);
+
+            // Find used attributes in current block
+            for (let i = currentBlock.startLine + 1; i <= position.line; i++) {
+                const line = document.lineAt(i).text.trim();
+                // Extract attribute names (first word on the line)
+                const attrMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s/);
+                if (attrMatch && !line.includes('{')) {
+                    context.usedAttributes.add(attrMatch[1]);
+                }
+            }
+        }
+
+        return context;
     }
 }

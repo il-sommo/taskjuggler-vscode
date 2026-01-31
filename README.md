@@ -1,288 +1,204 @@
 # TaskJuggler Language Support for VS Code
 
-> Complete language support for TaskJuggler project management files
+> Complete language support for TaskJuggler 3.x project management files
 
-[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](https://github.com/il-sommo/taskjuggler-vscode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![VS Code](https://img.shields.io/badge/VS%20Code-1.60%2B-blue.svg)](https://code.visualstudio.com/)
+[![VS Code](https://img.shields.io/badge/VS%20Code-1.108%2B-blue.svg)](https://code.visualstudio.com/)
 [![TaskJuggler](https://img.shields.io/badge/TaskJuggler-3.x-orange.svg)](https://taskjuggler.org)
-
-## Table of Contents
-
-- [Features](#features)
-- [Quick Start](#quick-start)
-- [Syntax Highlighting](#syntax-highlighting)
-- [Code Snippets](#code-snippets)
-- [IntelliSense & AI](#intellisense--ai)
-- [Example Project](#example-project)
-- [Build System](#build-system)
-- [Documentation](#documentation)
-- [Requirements](#requirements)
-- [Extension Settings](#extension-settings)
-- [Keyboard Shortcuts](#keyboard-shortcuts)
-- [Contributing](#contributing)
-- [License](#license)
-- [Support](#support)
 
 ## Features
 
-🎨 **Comprehensive Syntax Highlighting** - Full color-coding for all TaskJuggler language constructs
+### Core Features
+- 🎨 **Complete Syntax Highlighting** - Full color-coding for all TaskJuggler constructs
+- ⚡ **88 Smart Snippets** - Rapid development with tab completion
+- 🗓️ **Dynamic Dates** - Snippets auto-update with today's date
+- 📐 **Code Folding** - Visual block folding and region markers
 
-⚡ **40+ Smart Snippets** - Rapid development with intelligent code completion
+### IntelliSense (v0.3.0)
+- 🔧 **Context-Aware Completions** - Only relevant attributes based on current block
+- 💡 **Parameter Hints** - Signature help while typing (effort, allocate, depends, etc.)
+- 📅 **Smart Date Suggestions** - Quick dates (today, tomorrow, next week)
+- 🚀 **Quick Start Templates** - Auto-templates for empty files
+- 🎯 **Go-to-Definition** - Navigate to task/resource definitions
+- 150+ **Keyword Documentation** - Hover tooltips with syntax and examples
 
-📁 **Multi-file Projects** - Support for `.tjp` main files and `.tji` includes
-
-🔧 **IntelliSense Integration** - Context-aware suggestions and completions
-
-🤖 **AI Extension Compatible** - Works with GitHub Copilot and other AI assistants
-
-📐 **Code Folding** - Visual block folding and region markers
-
----
+### Compatibility
+- 📁 Multi-file projects (`.tjp`, `.tji`)
+- 🤖 AI assistants (GitHub Copilot, etc.)
 
 ## Quick Start
 
 ### Installation
 
-#### Via Git Clone
 ```bash
+# From marketplace
+ext install fabrizio-vacca.taskjuggler-syntax
+
+# Or from source
 git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
 make install
 ```
 
-#### Via Install Script
-```bash
-# macOS/Linux
-./scripts/install.sh
-
-# Windows (PowerShell)
-.\scripts\install.ps1
-```
-
 ### Usage
 
-1. **Restart VS Code** after installation
-2. **Open** any `.tjp` or `.tji` file
-3. **Start typing** - syntax highlighting is automatic
-4. **Try snippets** - type `project` + Tab
+1. Open any `.tjp` or `.tji` file
+2. Start typing - syntax highlighting automatic
+3. Try `project` + Tab for a full template
+4. Inside blocks, get context-aware completions
 
----
+## Snippets
 
-## Syntax Highlighting
+All snippets use **dynamic dates** - always current, never outdated.
 
-The extension provides complete color-coding for:
-
-- **Properties**: `project`, `task`, `resource`, `account`, `shift`, `scenario`
-- **Reports**: `taskreport`, `resourcereport`, `accountreport`, `textreport`
-- **Attributes**: `allocate`, `depends`, `effort`, `start`, `end`, `priority` (90+)
-- **Functions**: `isleaf()`, `istask()`, `ismilestone()`, `hasalert()`
-- **Operators**: Logical (`&`, `|`, `~`), comparison, arithmetic
-- **Constants**: `projectstart`, `projectend`, weekdays, formats
-- **Data Types**: Dates, durations, numbers, percentages, colors
-- **Comments**: Line (`#`) and block (`/* */`)
-- **Macros**: `${...}` and `$(...)` variables
-
----
-
-## Code Snippets
-
-Type a prefix and press **Tab** to insert:
-
-### Project Structure
-- `project` - Complete project template
-- `scenario` - Scenario definition
-- `macro` - Reusable macro
-
-### Tasks
-- `task` - Simple task
-- `task-effort` - Task with effort
-- `task-full` - Complete task with subtasks
+**Project & Structure**:
+- `project` - Complete project with resources, tasks, reports
+- `task` - Task definition
+- `resource` - Resource definition
 - `milestone` - Milestone task
 
-### Resources
-- `resource` - Resource definition
-- `resource-team` - Team structure
-- `shift` - Work shift
+**Scheduling**:
+- `effort` - Work effort (5d, 2w, etc.)
+- `duration` - Calendar duration
+- `depends` - Task dependencies
+- `allocate` - Resource allocation
 
-### Reports
-- `taskreport` - Task report
-- `resourcereport` - Resource report
-- `textreport` - Text/HTML report
+**Time Constraints**:
+- `start`, `end` - Date constraints (auto-filled with today)
+- `minstart`, `maxend` - Min/max constraints
+- `vacation` - Vacation periods (defaults to August)
 
-[View all 40+ snippets →](docs/FEATURES.md#snippets)
+**Reports**:
+- `taskreport`, `resourcereport` - HTML/CSV reports
+- `period` - Report period (today → year-end)
 
----
+[View all 88 snippets →](docs/FEATURES.md#snippets)
 
-## IntelliSense & AI
+## Context-Aware IntelliSense
 
-The extension integrates seamlessly with VS Code's IntelliSense:
+The extension understands **where you are** in the document:
 
-- **Auto-completion**: Ctrl/Cmd + Space for suggestions
-- **Parameter navigation**: Tab through snippet placeholders
-- **Context-aware**: Snippets appear in appropriate contexts
+```taskjuggler
+task development "Development" {
+    # Type here → get ONLY task attributes
+    # effort, allocate, depends, start, end...
+}
 
-**AI Extension Compatibility:**
-- ✅ GitHub Copilot
-- ✅ TabNine
-- ✅ IntelliCode
-
----
-
-## Example Project
-
-A complete, modular TaskJuggler project is included in `test-project/`:
-
-```
-test-project/
-├── project.tjp              # Main project file
-├── includes/
-│   ├── config.tji           # Configuration & macros
-│   ├── resources.tji        # Team structure
-│   ├── tasks.tji            # Work breakdown
-│   └── reports.tji          # Report definitions
-└── reports/                 # Generated HTML/CSV
-```
-
-**Compile the example:**
-```bash
-make compile-test
-make view-reports
-```
-
----
-
-## Build System
-
-Comprehensive Makefile for development:
-
-```bash
-make help           # Show all commands
-make install        # Install extension
-make test           # Test with example
-make compile-test   # Compile test project
-make package        # Create VSIX package
-make clean          # Remove artifacts
-```
-
----
-
-## Documentation
-
-- **[Quick Start](QUICKSTART.md)** - Get started in 5 minutes
-- **[Features](docs/FEATURES.md)** - Complete feature list
-- **[Best Practices](docs/BEST-PRACTICES.md)** - Advanced tips
-- **[Testing Guide](docs/TESTING.md)** - Testing checklist
-- **[Installation](docs/INSTALL.md)** - Detailed installation
-- **[Changelog](CHANGELOG.md)** - Version history
-
----
-
-## Requirements
-
-- **VS Code**: 1.60 or higher
-- **TaskJuggler**: 3.x (for compiling projects)
-
-### Installing TaskJuggler
-
-```bash
-# macOS
-brew install taskjuggler
-
-# Or via RubyGems
-gem install taskjuggler
-```
-
----
-
-## Extension Settings
-
-Recommended VS Code settings for TaskJuggler files:
-
-```json
-{
-  "[taskjuggler]": {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": false,
-    "editor.formatOnSave": false
-  }
+resource john "John Doe" {
+    # Type here → get ONLY resource attributes
+    # rate, efficiency, limits, email...
 }
 ```
 
-[View complete settings →](.vscode/settings.json.example)
+**Smart features**:
+- ✅ Filters out already-used attributes
+- ✅ Shows parameter hints while typing
+- ✅ Suggests dates (today, tomorrow, etc.)
+- ✅ Completes task/resource references
 
----
+## Documentation
+
+- **[Installation Guide](docs/INSTALL.md)** - Detailed setup instructions
+- **[Features Overview](docs/FEATURES.md)** - Complete feature list
+- **[Best Practices](docs/BEST-PRACTICES.md)** - TaskJuggler tips & patterns
+- **[Testing Guide](docs/TESTING.md)** - Run tests and contribute
+- **[Contributing](docs/CONTRIBUTING.md)** - Contribution guidelines
+
+## Example Project
+
+A complete example project is included in `test-project/`:
+
+```bash
+cd test-project
+make compile    # Compile with tj3
+make view       # Open reports
+make clean      # Remove generated files
+```
+
+## Requirements
+
+- **VS Code**: 1.108.0 or higher
+- **TaskJuggler** (optional): For compiling `.tjp` files
+  ```bash
+  # macOS
+  brew install taskjuggler
+
+  # Ubuntu/Debian
+  sudo apt-get install taskjuggler3
+  ```
+
+## Extension Settings
+
+Currently no configuration needed - works out of the box!
+
+Future settings:
+- `taskjuggler.compiler.path` - Path to tj3 compiler
+- `taskjuggler.validation.enabled` - Enable real-time validation
 
 ## Keyboard Shortcuts
 
-Suggested shortcuts (add to your `keybindings.json`):
+- `Ctrl+Space` - Trigger IntelliSense
+- `Ctrl+Shift+Space` - Show parameter hints
+- `F12` - Go to definition
+- `Tab` - Complete snippet
 
-- **Compile**: Ctrl+Shift+B
-- **Check syntax**: Ctrl+Shift+C
-- **Insert task**: Ctrl+Alt+T
-- **Insert resource**: Ctrl+Alt+R
+## What's New in v0.3.0
 
-[View all shortcuts →](.vscode/keybindings.json.example)
+🎉 **Major Update: Context-Aware Intelligence**
 
----
+- ✅ Smart completions based on block type
+- ✅ Parameter hints for all major attributes
+- ✅ Date suggestions (today, tomorrow, next week)
+- ✅ Quick start templates for empty files
+- ✅ Dynamic dates in all snippets
+- ✅ 150+ keywords documented
+
+[Full Changelog →](CHANGELOG.md)
+
+## Roadmap
+
+- **v0.4.0** - Real-time validation & diagnostics
+- **v0.5.0** - Rename refactoring, find references
+- **v0.6.0** - Code actions, formatting
+- **v1.0.0** - tj3 compiler integration, live preview
 
 ## Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development
+Contributions welcome! See [CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
 ```bash
-# Clone repository
+# Setup
 git clone https://github.com/il-sommo/taskjuggler-vscode.git
 cd taskjuggler-vscode
+npm install
 
-# Install dependencies
-make deps
+# Develop
+npm run compile
+npm run watch     # Watch mode
+npm test          # Run tests
 
-# Make changes to:
-# - syntaxes/taskjuggler.tmLanguage.json (syntax)
-# - snippets/taskjuggler.json (snippets)
-# - language-configuration.json (language features)
-
-# Validate changes
-make validate
-
-# Test locally
-make reinstall
-
-# Create package
+# Package
 make package
 ```
 
----
+## Support
+
+- 🐛 **Issues**: [GitHub Issues](https://github.com/il-sommo/taskjuggler-vscode/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/il-sommo/taskjuggler-vscode/discussions)
+- 📧 **Email**: fabrizio.vacca@gmail.com
 
 ## License
 
-[MIT License](LICENSE) - Copyright (c) 2026 Fabrizio Vacca
+MIT © [Fabrizio Vacca](https://github.com/il-sommo)
+
+## Acknowledgments
+
+- **TaskJuggler** project for the excellent project management tool
+- **VS Code** team for the extension API
+- All contributors and users
 
 ---
 
-## Credits
+**Made with ❤️ for project managers and developers**
 
-**Developer**: Fabrizio Vacca
-**Email**: fabrizio.vacca@gmail.com
-
-**Inspired by:**
-- [TaskJuggler Official Tutorial](https://github.com/taskjuggler/TaskJuggler/tree/master/examples/Tutorial)
-- [vim-taskjuggler](https://github.com/kalafut/vim-taskjuggler)
-- [taskjuggler-mode.el](https://github.com/ska2342/taskjuggler-mode.el)
-
-**TaskJuggler**: [taskjuggler.org](https://taskjuggler.org)
-
----
-
-## Support
-
-- 🐛 **Bug reports**: [GitHub Issues](https://github.com/il-sommo/taskjuggler-vscode/issues)
-- 💡 **Feature requests**: [GitHub Issues](https://github.com/il-sommo/taskjuggler-vscode/issues)
-- 📚 **Documentation**: [Wiki](https://github.com/il-sommo/taskjuggler-vscode/wiki)
-
----
-
-**Made with ❤️ for the TaskJuggler community**

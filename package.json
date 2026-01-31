@@ -1,9 +1,9 @@
 {
   "name": "taskjuggler-syntax",
   "displayName": "TaskJuggler Language Support",
-  "description": "Complete language support for TaskJuggler: syntax highlighting, snippets, folding, IntelliSense, and AI-powered features",
-  "version": "0.2.2",
-  "buildDate": "2026-01-29",
+  "description": "Complete language support for TaskJuggler: syntax highlighting, snippets, folding, IntelliSense, and context-aware features",
+  "version": "0.3.0",
+  "buildDate": "2026-01-31",
   "publisher": "fabrizio-vacca",
   "author": {
     "name": "Fabrizio Vacca",
@@ -19,7 +19,8 @@
   "icon": "images/icon.png",
   "main": "./out/extension.js",
   "activationEvents": [
-    "onLanguage:taskjuggler"
+    "onLanguage:taskjuggler",
+    "onStartupFinished"
   ],
   "contributes": {
     "languages": [
@@ -80,12 +81,19 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile"
+    "pretest": "npm run compile && npm run lint",
+    "lint": "echo 'Linting...'",
+    "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^25.1.0",
     "@types/vscode": "^1.108.1",
+    "@vscode/test-electron": "^2.3.0",
     "@vscode/vsce": "^3.7.1",
+    "glob": "^13.0.0",
+    "mocha": "^10.2.0",
     "typescript": "^5.9.3"
   }
 }

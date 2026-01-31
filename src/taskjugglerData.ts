@@ -1352,6 +1352,45 @@ export const taskjugglerKeywords: Record<string, KeywordInfo> = {
     }
 };
 
+// Context-specific attribute lists for filtering
+export const taskAttributes = [
+    'allocate', 'alternative', 'booking', 'charge', 'chargeset', 'complete',
+    'depends', 'duration', 'effort', 'end', 'flags', 'journalentry', 'length',
+    'limits', 'maxend', 'maxstart', 'milestone', 'minend', 'minstart', 'note',
+    'priority', 'precedes', 'purge', 'responsible', 'scheduled', 'scheduling',
+    'start', 'status', 'statusnote', 'vacation', 'warn'
+];
+
+export const resourceAttributes = [
+    'booking', 'charge', 'chargeset', 'efficiency', 'email', 'flags',
+    'journalentry', 'leaves', 'limits', 'managers', 'note', 'rate',
+    'responsible', 'shift', 'statusnote', 'vacation', 'workinghours'
+];
+
+export const projectAttributes = [
+    'alertlevels', 'copyright', 'currency', 'currencyformat', 'dailyworkinghours',
+    'extend', 'journalattributes', 'monthlyworkinghours', 'now', 'numberformat',
+    'outputdir', 'projectid', 'rate', 'scenario', 'shorttimeformat', 'timeformat',
+    'timingresolution', 'timezone', 'trackingscenario', 'weeklyworkinghours',
+    'workinghours', 'yearlyworkinghours'
+];
+
+export const reportAttributes = [
+    'accumulate', 'balance', 'barlabels', 'caption', 'center', 'columns',
+    'currencyformat', 'dailymax', 'dailymin', 'end', 'epilog', 'formats',
+    'headline', 'header', 'height', 'hidejournalentry', 'hidereport',
+    'hidetask', 'hideresource', 'journalattributes', 'journalmode', 'labels',
+    'left', 'loadunit', 'monthlymax', 'monthlymin', 'numberformat', 'period',
+    'prolog', 'rawhead', 'rawtail', 'right', 'scenarios', 'shorttimeformat',
+    'showactual', 'sortresources', 'sorttasks', 'start', 'taskroot',
+    'resourceroot', 'timeformat', 'timezone', 'title', 'weeklymax', 'weeklymin'
+];
+
+export const accountAttributes = [
+    'aggregate', 'balance', 'charge', 'credit', 'flags', 'journalentry',
+    'note', 'statusnote'
+];
+
 export const completionItems: vscode.CompletionItem[] = Object.values(taskjugglerKeywords).map(keyword => {
     const item = new vscode.CompletionItem(keyword.name,
         keyword.category === 'property' ? vscode.CompletionItemKind.Class :

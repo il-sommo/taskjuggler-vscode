@@ -2,7 +2,7 @@
   "Project Definition": {
     "prefix": "project",
     "body": [
-      "project ${1:project_id} \"${2:Project Name}\" ${3:2024-01-01} +${4:6}m {",
+      "project ${1:project_id} \"${2:Project Name}\" ${3:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} +${4:6}m {",
       "\ttimezone \"${5:UTC}\"",
       "\ttimeformat \"%Y-%m-%d\"",
       "\tnumberformat \"-\" \"\" \",\" \".\" 1",
@@ -15,7 +15,7 @@
       "\t$0",
       "}"
     ],
-    "description": "Create a new TaskJuggler project"
+    "description": "Create a new TaskJuggler project (date: today)"
   },
   "Task Definition": {
     "prefix": "task",
@@ -52,11 +52,11 @@
     "body": [
       "task ${1:milestone_id} \"${2:Milestone Name}\" {",
       "\tmilestone",
-      "\tstart ${3:2024-01-01}",
+      "\tstart ${3:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}",
       "\t$0",
       "}"
     ],
-    "description": "Create a milestone task"
+    "description": "Create a milestone task (date: today)"
   },
   "Resource Definition": {
     "prefix": "resource",
@@ -146,8 +146,8 @@
     "body": [
       "export ${1:export_id} {",
       "\tformats csv",
-      "\tstart ${2:2024-01-01}",
-      "\tend ${3:2024-12-31}",
+      "\tstart ${2:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}",
+      "\tend ${3:$CURRENT_YEAR-12-31}",
       "\t$0",
       "}"
     ],
@@ -199,14 +199,14 @@
   "Leave Definition": {
     "prefix": "leave",
     "body": [
-      "leaves ${1:holiday} \"${2:Holiday Name}\" ${3:2024-01-01}$0"
+      "leaves ${1:holiday} \"${2:Holiday Name}\" ${3:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}$0"
     ],
     "description": "Define a leave/holiday"
   },
   "Journal Entry": {
     "prefix": "journalentry",
     "body": [
-      "journalentry ${1:2024-01-01} \"${2:Entry title}\" {",
+      "journalentry ${1:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} \"${2:Entry title}\" {",
       "\tauthor ${3:author_id}",
       "\tsummary \"${4:Summary}\"",
       "\tdetails -8<-",
@@ -328,21 +328,21 @@
   "Start Date": {
     "prefix": "start",
     "body": [
-      "start ${1:2024-01-01}$0"
+      "start ${1:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}$0"
     ],
     "description": "Set start date"
   },
   "End Date": {
     "prefix": "end",
     "body": [
-      "end ${1:2024-12-31}$0"
+      "end ${1:$CURRENT_YEAR-12-31}$0"
     ],
     "description": "Set end date"
   },
   "Booking": {
     "prefix": "booking",
     "body": [
-      "booking ${1:resource_id} ${2:2024-01-01} +${3:5}d { ${4:overtime 2} }$0"
+      "booking ${1:resource_id} ${2:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} +${3:5}d { ${4:overtime 2} }$0"
     ],
     "description": "Create a booking"
   },
@@ -364,7 +364,7 @@
       "timesheetreport ${1:report_id} \"${2:Timesheet}\" {",
       "\tformats html",
       "\tresource ${3:resource_id}",
-      "\tweekly ${4:2024-01-01}",
+      "\tweekly ${4:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}",
       "\t$0",
       "}"
     ],
@@ -403,7 +403,7 @@
   "Vacation": {
     "prefix": "vacation",
     "body": [
-      "vacation ${1:2024-08-01} - ${2:2024-08-15}$0"
+      "vacation ${1:$CURRENT_YEAR-08-01} - ${2:$CURRENT_YEAR-08-15}$0"
     ],
     "description": "Define vacation period for a resource"
   },
@@ -585,28 +585,28 @@
   "Minstart Constraint": {
     "prefix": "minstart",
     "body": [
-      "minstart ${1:2024-01-01}$0"
+      "minstart ${1:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}$0"
     ],
     "description": "Set minimum start date"
   },
   "Maxstart Constraint": {
     "prefix": "maxstart",
     "body": [
-      "maxstart ${1:2024-06-01}$0"
+      "maxstart ${1:$CURRENT_YEAR-06-01}$0"
     ],
     "description": "Set maximum start date"
   },
   "Minend Constraint": {
     "prefix": "minend",
     "body": [
-      "minend ${1:2024-03-01}$0"
+      "minend ${1:$CURRENT_YEAR-03-01}$0"
     ],
     "description": "Set minimum end date"
   },
   "Maxend Constraint": {
     "prefix": "maxend",
     "body": [
-      "maxend ${1:2024-12-31}$0"
+      "maxend ${1:$CURRENT_YEAR-12-31}$0"
     ],
     "description": "Set maximum end date"
   },
@@ -630,14 +630,14 @@
   "Now Reference": {
     "prefix": "now",
     "body": [
-      "now ${1:2024-01-15-${2:12}:${3:00}}$0"
+      "now ${1:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE-${2:12}:${3:00}}$0"
     ],
     "description": "Set current time for reporting"
   },
   "Period": {
     "prefix": "period",
     "body": [
-      "period ${1:2024-01-01} - ${2:2024-12-31}$0"
+      "period ${1:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} - ${2:$CURRENT_YEAR-12-31}$0"
     ],
     "description": "Set report period"
   },
