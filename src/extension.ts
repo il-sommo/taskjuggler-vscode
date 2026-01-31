@@ -6,6 +6,7 @@ import { TaskJugglerSignatureHelpProvider } from './signatureHelpProvider';
 import { registerQuickStart } from './quickStart';
 import { InteractiveSnippets } from './interactiveSnippets';
 import { DiagnosticsProvider } from './diagnosticsProvider';
+import { TaskJugglerFormattingProvider } from './formattingProvider';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('TaskJuggler extension activated');
@@ -41,11 +42,18 @@ export function activate(context: vscode.ExtensionContext) {
         ' ', '-'
     );
 
+    // Register Formatting Provider
+    const formattingProvider = vscode.languages.registerDocumentFormattingEditProvider(
+        selector,
+        new TaskJugglerFormattingProvider()
+    );
+
     context.subscriptions.push(
         hoverProvider,
         completionProvider,
         definitionProvider,
-        signatureHelpProvider
+        signatureHelpProvider,
+        formattingProvider
     );
 
     // Register Quick Start for empty files
